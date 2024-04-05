@@ -7,4 +7,6 @@ Grupo del paralelo 201, integrantes:
 - Romina Aguilera 202173572-0
 - Nicolás Muñoz 202073512-3
 
-# Wiki
+## Wiki
+
+Para acceder a la wiki, ir la siguiente enlace: 
