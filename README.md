@@ -9,4 +9,4 @@ Grupo del paralelo 201, integrantes:
 
 ## Wiki
 
-Para acceder a la wiki, ir la siguiente enlace: [https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF.wiki.git](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF.wiki.git)
+Para acceder a la wiki, ir la siguiente enlace: [[https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF.wiki.git](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF.wiki.git)](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF/wiki#wiki-grupo-losanalistas)
