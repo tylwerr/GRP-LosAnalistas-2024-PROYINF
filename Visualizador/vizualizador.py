@@ -40,10 +40,10 @@ def menubar_shortcut(event=None):
 
 app = Tk()
 app.title("VISUALIZADOR USM")
-fondo = PhotoImage(file="C:\\Users\\carlo\\OneDrive\\Escritorio\\usm\\1er semestre 2024\\Analisis\\proyecto\\GRP-LosAnalistas-2024-PROYINF\\Visualizador\\IMG\\foto_fondo.png")
+fondo = PhotoImage(file=".\\Visualizador\\IMG\\foto_fondo.png")
 label_fondo = Label(app, image=fondo)
 label_fondo.place(x=0, y=0, relwidth=1, relheight=1)
-app.iconbitmap("C:\\Users\\carlo\\OneDrive\\Escritorio\\usm\\1er semestre 2024\\Analisis\\proyecto\\GRP-LosAnalistas-2024-PROYINF\\Visualizador\\IMG\\Foto_Logo.ico")
+app.iconbitmap(".\\Visualizador\\IMG\\Foto_Logo.ico")
 menubar_shortcut()
 label_image = Label(app)
 label_image.pack()
