@@ -12,7 +12,7 @@ Grupo del paralelo 201, integrantes:
 Para acceder a la wiki, ir la siguiente [enlace](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF/wiki#wiki-grupo-losanalistas)
 
 
-## Requerimientos para el programa
+## Requerimientos e instrucciones de uso del programa
 
 Para poder correr el programa y mostrar el prototipo/avance, debe tener instalado lo siguiente:
 
