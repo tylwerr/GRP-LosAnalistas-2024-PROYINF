@@ -27,4 +27,4 @@ Librerías del lenguaje:
 
 Luego debe descargar las carpetas presentes: DATOS_DICOM , Visualizador.
 
-Una vez descargado, ejecute el archivo "visualizador.py" para que comience el programa, para salir solo cierre la ventana.
+Una vez descargado, ejecute el archivo "visualizador.py" que se encuentra en la carpeta "Visualizador" para que comience el programa, para salir solo cierre la ventana.
