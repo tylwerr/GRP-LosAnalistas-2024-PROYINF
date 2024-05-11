@@ -10,9 +10,22 @@ def open_file():
         dicom_data = pydicom.dcmread(file_path)
         image_array = dicom_data.pixel_array
         image = Image.fromarray(image_array)
-        image_tk = ImageTk.PhotoImage(image)
+        image = image.convert('L')
+        cambio_dimensiones = image.resize((600,700), Image.BICUBIC) 
+        image_tk = ImageTk.PhotoImage(cambio_dimensiones)
         label_image.configure(image=image_tk)
         label_image.image = image_tk 
+        imagen_centro()
+
+
+def imagen_centro():
+    window_width = app.winfo_width()
+    window_height = app.winfo_height()
+    image_width = label_image.winfo_width()
+    image_height = label_image.winfo_height()
+    x = (window_width - image_width) // 2
+    y = (window_height - image_height) // 2
+    label_image.place(x=x, y=y)
 
 def menubar_shortcut(event=None):
     menubar = Menu()
@@ -24,7 +37,6 @@ def menubar_shortcut(event=None):
     filemenu.add_command(label="Nuevo...")
     filemenu.add_command(label="Abrir...", command=open_file)
     filemenu.add_command(label="Salir")
-    
     #menu de las vistas
     menubar.add_cascade(label="Vistas", menu=viewmenu)
     viewmenu.add_cascade(label="Cant vistas...", menu=open_recent)
@@ -48,4 +60,5 @@ menubar_shortcut()
 label_image = Label(app)
 label_image.pack()
 app.geometry("800x600+560+240")
+app.bind("<Configure>", lambda e: imagen_centro())
 app.mainloop()
