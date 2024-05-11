@@ -35,12 +35,12 @@ def zoom_out():
     update_image()
 
 def colocar_botones():
-    button_width = zoom_in_button.winfo_reqwidth()  
-    button_height = zoom_in_button.winfo_reqheight() 
-    x_position = app.winfo_width() - 2 * button_width  
+    button_height = zoom_in_button.winfo_reqheight()  
     y_position = app.winfo_height() - button_height  
-    zoom_in_button.place(x=x_position, y=y_position)
-    zoom_out_button.place(x=x_position + button_width, y=y_position)
+    zoom_out_button.place(x=0, y=y_position)
+    y_position -= button_height
+    zoom_in_button.place(x=0, y=y_position)
+
 
 def imagen_centro():
     window_width = app.winfo_width()
