@@ -36,7 +36,7 @@ def menubar_shortcut(event=None):
     menubar.add_cascade(label='Archivo', menu=filemenu)
     filemenu.add_command(label="Nuevo...")
     filemenu.add_command(label="Abrir...", command=open_file)
-    filemenu.add_command(label="Salir")
+    filemenu.add_command(label="Salir", command=cerrar)
     #menu de las vistas
     menubar.add_cascade(label="Vistas", menu=viewmenu)
     viewmenu.add_cascade(label="Cant vistas...", menu=open_recent)
@@ -50,6 +50,12 @@ def menubar_shortcut(event=None):
     
     app.config(menu=menubar)
 
+def pantalla_completa():
+    app.attributes('-fullscreen', True)
+
+def cerrar():
+    app.destroy()
+
 app = Tk()
 app.title("VISUALIZADOR USM")
 fondo = PhotoImage(file=".\\Visualizador\\IMG\\foto_fondo.png")
@@ -60,5 +66,6 @@ menubar_shortcut()
 label_image = Label(app)
 label_image.pack()
 app.geometry("800x600+560+240")
+pantalla_completa()
 app.bind("<Configure>", lambda e: imagen_centro())
 app.mainloop()
