@@ -5,18 +5,42 @@ import pydicom
 from PIL import Image, ImageTk
 
 def open_file():
+    global image 
     file_path = filedialog.askopenfilename(title="Seleccionar archivo DICOM", filetypes=[("Archivos DICOM", "*.dcm")])
     if file_path:
         dicom_data = pydicom.dcmread(file_path)
         image_array = dicom_data.pixel_array
         image = Image.fromarray(image_array)
         image = image.convert('L')
-        cambio_dimensiones = image.resize((600,700), Image.BICUBIC) 
-        image_tk = ImageTk.PhotoImage(cambio_dimensiones)
-        label_image.configure(image=image_tk)
-        label_image.image = image_tk 
-        imagen_centro()
+        image = image.resize((600,700), Image.BICUBIC) 
+        update_image()
 
+def update_image():
+    global image_tk, label_image, image
+    image_tk = ImageTk.PhotoImage(image)
+    label_image.configure(image=image_tk)
+    label_image.image = image_tk 
+    imagen_centro()
+
+def zoom_in():
+    global image
+    width, height = image.size
+    image = image.resize((int(width*1.1), int(height*1.1)), Image.BICUBIC)
+    update_image()
+
+def zoom_out():
+    global image
+    width, height = image.size
+    image = image.resize((int(width*0.9), int(height*0.9)), Image.BICUBIC)
+    update_image()
+
+def colocar_botones():
+    button_width = zoom_in_button.winfo_reqwidth()  
+    button_height = zoom_in_button.winfo_reqheight() 
+    x_position = app.winfo_width() - 2 * button_width  
+    y_position = app.winfo_height() - button_height  
+    zoom_in_button.place(x=x_position, y=y_position)
+    zoom_out_button.place(x=x_position + button_width, y=y_position)
 
 def imagen_centro():
     window_width = app.winfo_width()
@@ -68,4 +92,9 @@ label_image.pack()
 app.geometry("800x600+560+240")
 pantalla_completa()
 app.bind("<Configure>", lambda e: imagen_centro())
+zoom_in_imagen = PhotoImage(file=".\\Visualizador\\IMG\\acercarse.png")
+zoom_out_imagen = PhotoImage(file=".\\Visualizador\\IMG\\alejarse.png")
+zoom_in_button = ttk.Button(app, image=zoom_in_imagen, command=zoom_in)
+zoom_out_button = ttk.Button(app, image=zoom_out_imagen, command=zoom_out)
+app.after(100, colocar_botones)
 app.mainloop()
