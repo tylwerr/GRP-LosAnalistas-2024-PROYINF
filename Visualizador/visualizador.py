@@ -75,7 +75,9 @@ def menubar_shortcut(event=None):
     app.config(menu=menubar)
 
 def pantalla_completa():
-    app.attributes('-fullscreen', True)
+    screen_width = app.winfo_screenwidth()
+    screen_height = app.winfo_screenheight()
+    app.geometry(f"{screen_width}x{screen_height}+0+0")
 
 def cerrar():
     app.destroy()
