@@ -36,20 +36,22 @@ def zoom_out():
 
 def colocar_botones():
     button_height = zoom_in_button.winfo_reqheight()  
-    y_position = app.winfo_height() - button_height  
-    zoom_out_button.place(x=0, y=y_position)
-    y_position -= button_height
-    zoom_in_button.place(x=0, y=y_position)
+    y_position = app.winfo_height() - button_height - 80
+    zoom_out_button.place(x=10, y=y_position) 
+    y_position -= button_height + 10 
+    zoom_in_button.place(x=10, y=y_position)  
+
 
 
 def imagen_centro():
-    window_width = app.winfo_width()
-    window_height = app.winfo_height()
+    canvas.config(scrollregion=canvas.bbox(ALL))
+    window_width = canvas.winfo_width()
+    window_height = canvas.winfo_height()
     image_width = label_image.winfo_width()
     image_height = label_image.winfo_height()
     x = (window_width - image_width) // 2
     y = (window_height - image_height) // 2
-    label_image.place(x=x, y=y)
+    canvas.coords(image_window, x, y)
 
 def menubar_shortcut(event=None):
     menubar = Menu()
@@ -74,7 +76,7 @@ def menubar_shortcut(event=None):
     
     app.config(menu=menubar)
 
-def pantalla_completa():
+def ajustar_tamano_pantalla():
     screen_width = app.winfo_screenwidth()
     screen_height = app.winfo_screenheight()
     app.geometry(f"{screen_width}x{screen_height}+0+0")
@@ -84,19 +86,23 @@ def cerrar():
 
 app = Tk()
 app.title("VISUALIZADOR USM")
-fondo = PhotoImage(file=".\\Visualizador\\IMG\\foto_fondo.png")
-label_fondo = Label(app, image=fondo)
-label_fondo.place(x=0, y=0, relwidth=1, relheight=1)
 app.iconbitmap(".\\Visualizador\\IMG\\Foto_Logo.ico")
 menubar_shortcut()
-label_image = Label(app)
-label_image.pack()
-app.geometry("800x600+560+240")
-pantalla_completa()
-app.bind("<Configure>", lambda e: imagen_centro())
+frame = Frame(app)
+frame.pack(fill=BOTH, expand=YES)
+canvas = Canvas(frame, bg="white")
+canvas.pack(side=LEFT, fill=BOTH, expand=YES)
+scrollbar_v = Scrollbar(frame, orient=VERTICAL, command=canvas.yview)
+scrollbar_v.pack(side=RIGHT, fill=Y)
+scrollbar_h = Scrollbar(app, orient=HORIZONTAL, command=canvas.xview)
+scrollbar_h.pack(side=BOTTOM, fill=X)
+canvas.config(yscrollcommand=scrollbar_v.set, xscrollcommand=scrollbar_h.set)
+label_image = Label(canvas)
+image_window = canvas.create_window(0, 0, anchor=NW, window=label_image)
 zoom_in_imagen = PhotoImage(file=".\\Visualizador\\IMG\\acercarse.png")
 zoom_out_imagen = PhotoImage(file=".\\Visualizador\\IMG\\alejarse.png")
 zoom_in_button = ttk.Button(app, image=zoom_in_imagen, command=zoom_in)
 zoom_out_button = ttk.Button(app, image=zoom_out_imagen, command=zoom_out)
 app.after(100, colocar_botones)
+ajustar_tamano_pantalla()
 app.mainloop()
