@@ -30,7 +30,6 @@ def update_images():
         image_tk_list.append(image_tk)
         labels[i].configure(image=image_tk)
         labels[i].image = image_tk
-    center_images()
 
 def zoom_in(view_index):
     global images
@@ -68,7 +67,7 @@ def create_views(n):
     image_windows = []
 
     for i in range(vistas):
-        canvas = Canvas(frame, bg="white")
+        canvas = Canvas(frame, bg="white", yscrollincrement=1, xscrollincrement=1) # ajustes adicionales
         canvas.pack(side=LEFT, fill=BOTH, expand=YES)
         canvases.append(canvas)
         
@@ -79,6 +78,8 @@ def create_views(n):
         image_windows.append(image_window)
         
         canvas.config(yscrollcommand=scrollbar_v.set, xscrollcommand=scrollbar_h.set)
+        scrollbar_v.config(command=canvas.yview) # configura la barra de desplazamiento y
+        scrollbar_h.config(command=canvas.xview) # barra de desplazamiento x
 
         # Botones de zoom para cada vista
         zoom_in_button = ttk.Button(canvas, image=zoom_in_image, command=lambda i=i: zoom_in(i))
