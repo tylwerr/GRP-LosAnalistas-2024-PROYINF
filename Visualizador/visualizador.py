@@ -12,7 +12,7 @@ def open_file():
         image_array = dicom_data.pixel_array
         image = Image.fromarray(image_array)
         image = image.convert('L')
-        image = image.resize((600,700), Image.BICUBIC) 
+        image = image.resize((600, 700), Image.BICUBIC) 
         update_image()
 
 def update_image():
@@ -20,30 +20,28 @@ def update_image():
     image_tk = ImageTk.PhotoImage(image)
     label_image.configure(image=image_tk)
     label_image.image = image_tk 
-    imagen_centro()
+    center_image()
 
 def zoom_in():
     global image
     width, height = image.size
-    image = image.resize((int(width*1.1), int(height*1.1)), Image.BICUBIC)
+    image = image.resize((int(width * 1.1), int(height * 1.1)), Image.BICUBIC)
     update_image()
 
 def zoom_out():
     global image
     width, height = image.size
-    image = image.resize((int(width*0.9), int(height*0.9)), Image.BICUBIC)
+    image = image.resize((int(width * 0.9), int(height * 0.9)), Image.BICUBIC)
     update_image()
 
-def colocar_botones():
+def place_buttons():
     button_height = zoom_in_button.winfo_reqheight()  
     y_position = app.winfo_height() - button_height - 80
     zoom_out_button.place(x=10, y=y_position) 
     y_position -= button_height + 10 
-    zoom_in_button.place(x=10, y=y_position)  
+    zoom_in_button.place(x=10, y=y_position)
 
-
-
-def imagen_centro():
+def center_image(event=None):
     canvas.config(scrollregion=canvas.bbox(ALL))
     window_width = canvas.winfo_width()
     window_height = canvas.winfo_height()
@@ -62,7 +60,7 @@ def menubar_shortcut(event=None):
     menubar.add_cascade(label='Archivo', menu=filemenu)
     filemenu.add_command(label="Nuevo...")
     filemenu.add_command(label="Abrir...", command=open_file)
-    filemenu.add_command(label="Salir", command=cerrar)
+    filemenu.add_command(label="Salir", command=close)
     #menu de las vistas
     menubar.add_cascade(label="Vistas", menu=viewmenu)
     viewmenu.add_cascade(label="Cant vistas...", menu=open_recent)
@@ -76,12 +74,12 @@ def menubar_shortcut(event=None):
     
     app.config(menu=menubar)
 
-def ajustar_tamano_pantalla():
+def adjust_screen_size():
     screen_width = app.winfo_screenwidth()
     screen_height = app.winfo_screenheight()
     app.geometry(f"{screen_width}x{screen_height}+0+0")
 
-def cerrar():
+def close():
     app.destroy()
 
 app = Tk()
@@ -99,10 +97,12 @@ scrollbar_h.pack(side=BOTTOM, fill=X)
 canvas.config(yscrollcommand=scrollbar_v.set, xscrollcommand=scrollbar_h.set)
 label_image = Label(canvas)
 image_window = canvas.create_window(0, 0, anchor=NW, window=label_image)
-zoom_in_imagen = PhotoImage(file=".\\Visualizador\\IMG\\acercarse.png")
-zoom_out_imagen = PhotoImage(file=".\\Visualizador\\IMG\\alejarse.png")
-zoom_in_button = ttk.Button(app, image=zoom_in_imagen, command=zoom_in)
-zoom_out_button = ttk.Button(app, image=zoom_out_imagen, command=zoom_out)
-app.after(100, colocar_botones)
-ajustar_tamano_pantalla()
+zoom_in_image = PhotoImage(file=".\\Visualizador\\IMG\\acercarse.png")
+zoom_out_image = PhotoImage(file=".\\Visualizador\\IMG\\alejarse.png")
+zoom_in_button = ttk.Button(app, image=zoom_in_image, command=zoom_in)
+zoom_out_button = ttk.Button(app, image=zoom_out_image, command=zoom_out)
+app.after(100, place_buttons)
+adjust_screen_size()
+app.bind("<Configure>", center_image)
+canvas.bind("<Configure>", center_image)
 app.mainloop()
