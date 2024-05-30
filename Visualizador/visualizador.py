@@ -90,13 +90,16 @@ def create_views(n):
         canvas.config(yscrollcommand=scrollbars_v[i].set, xscrollcommand=scrollbars_h[i].set)
         scrollbars_v[i].config(command=canvas.yview)
         scrollbars_h[i].config(command=canvas.xview)
-        zoom_in_button = ttk.Button(canvas, image=zoom_in_image, command=lambda i=i: zoom_in(i))
-        zoom_out_button = ttk.Button(canvas, image=zoom_out_image, command=lambda i=i: zoom_out(i))
-        zoom_in_button.pack(side=TOP, anchor=NW)
-        zoom_out_button.pack(side=TOP, anchor=NW)
+        button_frame = Frame(canvas)
+        button_frame.pack(side=BOTTOM, anchor=SW, padx=10, pady=10)
+        zoom_in_button = ttk.Button(button_frame, image=zoom_in_image, command=lambda i=i: zoom_in(i))
+        zoom_out_button = ttk.Button(button_frame, image=zoom_out_image, command=lambda i=i: zoom_out(i))
+        zoom_in_button.pack(side=TOP)  
+        zoom_out_button.pack(side=TOP)  
 
     frame.update_idletasks()
     center_images()
+
 
 
 def menubar_shortcut(event=None):
@@ -106,7 +109,6 @@ def menubar_shortcut(event=None):
     open_recent = Menu(viewmenu)
     # Menu de archivo
     menubar.add_cascade(label='Archivo', menu=filemenu)
-    filemenu.add_command(label="Nuevo...")
     filemenu.add_command(label="Abrir...", command=open_file)
     filemenu.add_command(label="Salir", command=close)
     # Menu de las vistas
