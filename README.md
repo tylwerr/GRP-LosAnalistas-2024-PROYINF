@@ -12,7 +12,7 @@ Grupo del paralelo 201, integrantes:
 Para acceder a la wiki, ir la siguiente [enlace](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF/wiki#wiki-grupo-losanalistas)
 
 ## Video 
-Para acceder al video sobre el visualizador, ir al siguiete [enlace](https://youtu.be/In0gr04gF_E)
+Para acceder al video sobre el visualizador, ir al siguiente [enlace](https://youtu.be/In0gr04gF_E)
 
 ## Requerimientos e instrucciones de uso del programa
 
