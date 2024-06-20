@@ -4,7 +4,7 @@ import pydicom
 from mayavi import mlab
 
 #Carpeta donde estan las imagenes dicom
-directorio = r"C:\Users\matuc\OneDrive\Escritorio\proyecto-analisis\GRP-LosAnalistas-2024-PROYINF\DATOS_DICOM\BSSFP"
+directorio = r".\GRP-LosAnalistas-2024-PROYINF\DATOS_DICOM\BSSFP"
 
 #Lista de los archivos dicom de la carpeta
 lista_archivos = [os.path.join(directorio, nombre_archivo) for nombre_archivo in os.listdir(directorio) if nombre_archivo.endswith('.dcm')]
