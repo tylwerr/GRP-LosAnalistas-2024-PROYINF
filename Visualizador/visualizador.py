@@ -5,98 +5,150 @@ import tkinter as tk
 import pydicom
 from PIL import Image, ImageTk
 
+vistas = 1
+canvases = []
+labels = []
+image_tk_list = []
+images = []
+
 def open_file():
-    global image 
+    global images
     file_path = filedialog.askopenfilename(title="Seleccionar archivo DICOM", filetypes=[("Archivos DICOM", "*.dcm")])
     if file_path:
         dicom_data = pydicom.dcmread(file_path)
         image_array = dicom_data.pixel_array
         image = Image.fromarray(image_array)
         image = image.convert('L')
-        image = image.resize((600,700), Image.BICUBIC) 
-        update_image()
+        image = image.resize((600, 700), Image.BICUBIC)
+        images = [image] * vistas
+        update_images()
 
-def update_image():
-    global image_tk, label_image, image
-    image_tk = ImageTk.PhotoImage(image)
-    label_image.configure(image=image_tk)
-    label_image.image = image_tk 
-    imagen_centro()
+def update_images():
+    global image_tk_list, labels, images
+    image_tk_list = []
+    for i in range(vistas):
+        image_tk = ImageTk.PhotoImage(images[i])
+        image_tk_list.append(image_tk)
+        labels[i].configure(image=image_tk)
+        labels[i].image = image_tk
 
-def zoom_in():
-    global image
-    width, height = image.size
-    image = image.resize((int(width*1.1), int(height*1.1)), Image.BICUBIC)
-    update_image()
+def zoom_in(view_index):
+    global images
+    width, height = images[view_index].size
+    images[view_index] = images[view_index].resize((int(width * 1.1), int(height * 1.1)), Image.BICUBIC)
+    update_images()
 
-def zoom_out():
-    global image
-    width, height = image.size
-    image = image.resize((int(width*0.9), int(height*0.9)), Image.BICUBIC)
-    update_image()
+def zoom_out(view_index):
+    global images
+    width, height = images[view_index].size
+    images[view_index] = images[view_index].resize((int(width * 0.9), int(height * 0.9)), Image.BICUBIC)
+    update_images()
 
-def colocar_botones():
-    button_height = zoom_in_button.winfo_reqheight()  
-    y_position = app.winfo_height() - button_height  
-    zoom_out_button.place(x=0, y=y_position)
-    y_position -= button_height
-    zoom_in_button.place(x=0, y=y_position)
+def center_images(event=None):
+    for i in range(vistas):
+        canvases[i].config(scrollregion=canvases[i].bbox(ALL))
+        window_width = canvases[i].winfo_width()
+        window_height = canvases[i].winfo_height()
+        image_width = labels[i].winfo_width()
+        image_height = labels[i].winfo_height()
+        x = (window_width - image_width) // 2
+        y = (window_height - image_height) // 2
+        canvases[i].coords(image_windows[i], x, y)
 
-def imagen_centro():
-    window_width = app.winfo_width()
-    window_height = app.winfo_height()
-    image_width = label_image.winfo_width()
-    image_height = label_image.winfo_height()
-    x = (window_width - image_width) // 2
-    y = (window_height - image_height) // 2
-    label_image.place(x=x, y=y)
+def create_views(n):
+    global vistas, canvases, labels, image_windows, scrollbars_v, scrollbars_h
+    vistas = n
+    for canvas in canvases:
+        canvas.destroy()
+    for label in labels:
+        label.destroy()
+
+    canvases = []
+    labels = []
+    image_windows = []
+
+    for scrollbar in scrollbars_v:
+        scrollbar.destroy()
+    for scrollbar in scrollbars_h:
+        scrollbar.destroy()
+    scrollbars_v = []
+    scrollbars_h = []
+
+    for i in range(vistas):
+        canvas = Canvas(frame, bg="white", yscrollincrement=1, xscrollincrement=1)
+        canvas.pack(side=LEFT, fill=BOTH, expand=YES)
+        canvases.append(canvas)
+        label = Label(canvas)
+        labels.append(label)
+        image_window = canvas.create_window(0, 0, anchor=NW, window=label)
+        image_windows.append(image_window)
+        scrollbar_v = Scrollbar(canvas, orient=VERTICAL)
+        scrollbar_h = Scrollbar(canvas, orient=HORIZONTAL)
+        scrollbar_v.pack(side=RIGHT, fill=Y)
+        scrollbar_h.pack(side=BOTTOM, fill=X)
+        scrollbars_v.append(scrollbar_v)
+        scrollbars_h.append(scrollbar_h)
+        canvas.config(yscrollcommand=scrollbars_v[i].set, xscrollcommand=scrollbars_h[i].set)
+        scrollbars_v[i].config(command=canvas.yview)
+        scrollbars_h[i].config(command=canvas.xview)
+        button_frame = Frame(canvas)
+        button_frame.pack(side=BOTTOM, anchor=SW, padx=10, pady=10)
+        zoom_in_button = ttk.Button(button_frame, image=zoom_in_image, command=lambda i=i: zoom_in(i))
+        zoom_out_button = ttk.Button(button_frame, image=zoom_out_image, command=lambda i=i: zoom_out(i))
+        zoom_in_button.pack(side=TOP)  
+        zoom_out_button.pack(side=TOP)  
+
+    frame.update_idletasks()
+    center_images()
+
 
 def menubar_shortcut(event=None):
     menubar = Menu()
     filemenu = Menu(menubar, tearoff=False)
     viewmenu = Menu(menubar, tearoff=False)
     open_recent = Menu(viewmenu)
-    #menu de archivo
+    # Menu de archivo
     menubar.add_cascade(label='Archivo', menu=filemenu)
-    filemenu.add_command(label="Nuevo...")
     filemenu.add_command(label="Abrir...", command=open_file)
-    filemenu.add_command(label="Salir", command=cerrar)
-    #menu de las vistas
+    filemenu.add_command(label="Salir", command=close)
+    # Menu de las vistas
     menubar.add_cascade(label="Vistas", menu=viewmenu)
     viewmenu.add_cascade(label="Cant vistas...", menu=open_recent)
-    open_recent.add_command(label="1")
-    open_recent.add_command(label="2")
-    open_recent.add_command(label="3")
+    open_recent.add_command(label="1", command=lambda: create_views(1))
+    open_recent.add_command(label="2", command=lambda: create_views(2))
+    open_recent.add_command(label="3", command=lambda: create_views(3))
     viewmenu.add_separator()
     viewmenu.add_command(label="Vista axial")
     viewmenu.add_command(label="Vista coronal")
     viewmenu.add_command(label="Vista sagital")
-    
+
     app.config(menu=menubar)
 
-def pantalla_completa():
+def adjust_screen_size():
     screen_width = app.winfo_screenwidth()
     screen_height = app.winfo_screenheight()
     app.geometry(f"{screen_width}x{screen_height}+0+0")
 
-def cerrar():
+def close():
     app.destroy()
 
 app = Tk()
 app.title("VISUALIZADOR USM")
-fondo = PhotoImage(file=".\\Visualizador\\IMG\\foto_fondo.png")
-label_fondo = Label(app, image=fondo)
-label_fondo.place(x=0, y=0, relwidth=1, relheight=1)
 app.iconbitmap(".\\Visualizador\\IMG\\Foto_Logo.ico")
 menubar_shortcut()
-label_image = Label(app)
-label_image.pack()
-app.geometry("800x600+560+240")
-pantalla_completa()
-app.bind("<Configure>", lambda e: imagen_centro())
-zoom_in_imagen = PhotoImage(file=".\\Visualizador\\IMG\\acercarse.png")
-zoom_out_imagen = PhotoImage(file=".\\Visualizador\\IMG\\alejarse.png")
-zoom_in_button = ttk.Button(app, image=zoom_in_imagen, command=zoom_in)
-zoom_out_button = ttk.Button(app, image=zoom_out_imagen, command=zoom_out)
-app.after(100, colocar_botones)
+frame = Frame(app)
+frame.pack(fill=BOTH, expand=YES)
+scrollbars_v = []
+scrollbars_h = []
+scrollbar_v = Scrollbar(frame, orient=VERTICAL)
+scrollbar_v.pack(side=RIGHT, fill=Y)
+scrollbar_h = Scrollbar(app, orient=HORIZONTAL)
+scrollbar_h.pack(side=BOTTOM, fill=X)
+scrollbars_v.append(scrollbar_v)
+scrollbars_h.append(scrollbar_h)
+zoom_in_image = PhotoImage(file=".\\Visualizador\\IMG\\acercarse.png")
+zoom_out_image = PhotoImage(file=".\\Visualizador\\IMG\\alejarse.png")
+adjust_screen_size()
+app.bind("<Configure>", center_images)
+create_views(1)
 app.mainloop()
