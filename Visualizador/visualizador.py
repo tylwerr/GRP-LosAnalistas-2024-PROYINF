@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+import tkinter as tk
 import pydicom
 from PIL import Image, ImageTk
 
@@ -40,7 +41,6 @@ def colocar_botones():
     zoom_out_button.place(x=0, y=y_position)
     y_position -= button_height
     zoom_in_button.place(x=0, y=y_position)
-
 
 def imagen_centro():
     window_width = app.winfo_width()
