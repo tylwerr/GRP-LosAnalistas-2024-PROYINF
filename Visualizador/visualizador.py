@@ -4,17 +4,22 @@ from tkinter import filedialog
 import tkinter as tk
 import pydicom
 from PIL import Image, ImageTk
+from pathlib import Path
+
+from img_3d import abrir_img_3d
 
 vistas = 1
 canvases = []
 labels = []
 image_tk_list = []
 images = []
+path = None
 
 def open_file():
-    global images
+    global images, path
     file_path = filedialog.askopenfilename(title="Seleccionar archivo DICOM", filetypes=[("Archivos DICOM", "*.dcm")])
     if file_path:
+        path = file_path
         dicom_data = pydicom.dcmread(file_path)
         image_array = dicom_data.pixel_array
         image = Image.fromarray(image_array)
@@ -54,6 +59,12 @@ def center_images(event=None):
         x = (window_width - image_width) // 2
         y = (window_height - image_height) // 2
         canvases[i].coords(image_windows[i], x, y)
+
+def openOn3D():
+    global path
+    file_path = Path(path)
+    dir_path = file_path.parent
+    abrir_img_3d(dir_path)
 
 def create_views(n):
     global vistas, canvases, labels, image_windows, scrollbars_v, scrollbars_h
@@ -95,8 +106,10 @@ def create_views(n):
         button_frame.pack(side=BOTTOM, anchor=SW, padx=10, pady=10)
         zoom_in_button = ttk.Button(button_frame, image=zoom_in_image, command=lambda i=i: zoom_in(i))
         zoom_out_button = ttk.Button(button_frame, image=zoom_out_image, command=lambda i=i: zoom_out(i))
-        zoom_in_button.pack(side=TOP)  
-        zoom_out_button.pack(side=TOP)  
+        open_on_3d_button = ttk.Button(button_frame, text="Abrir en 3D", command=lambda i=i: openOn3D())
+        zoom_in_button.pack(side=TOP)
+        zoom_out_button.pack(side=TOP)
+        open_on_3d_button.pack(side=TOP)
 
     frame.update_idletasks()
     center_images()
