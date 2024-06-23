@@ -26,6 +26,7 @@ Librerías del lenguaje:
 - numpy 1.26.4
 - pillow 10.3.0
 - tkinter 8.6
+- mayavi 4.8.2
 
 Luego debe descargar las carpetas presentes: DATOS_DICOM , Visualizador.
 
