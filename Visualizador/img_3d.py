@@ -39,9 +39,7 @@ def vistas_corte(image_stack, tipo_vista):
     
     vista_normalizada = vista.astype(np.float32) / np.max(vista)
     
-    mlab.figure()
-    mlab.imshow(vista_normalizada, colormap='gray')
-    mlab.show()
+    return vista_normalizada
 
 if __name__ == "__main__":
     directorio = r"..\GRP-LosAnalistas-2024-PROYINF\DATOS_DICOM\BSSFP"
