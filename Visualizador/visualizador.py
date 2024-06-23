@@ -6,7 +6,7 @@ import pydicom
 from PIL import Image, ImageTk
 from pathlib import Path
 
-from img_3d import abrir_img_3d
+from img_3d import cargar_3d, abrir_img_3d, vistas_corte
 
 vistas = 1
 canvases = []
@@ -14,6 +14,7 @@ labels = []
 image_tk_list = []
 images = []
 path = None
+image_stack = None
 
 def open_file():
     global images, path
@@ -61,10 +62,11 @@ def center_images(event=None):
         canvases[i].coords(image_windows[i], x, y)
 
 def openOn3D():
-    global path
+    global path, image_stack
     file_path = Path(path)
     dir_path = file_path.parent
-    abrir_img_3d(dir_path)
+    image_stack = cargar_3d(dir_path)
+    abrir_img_3d(image_stack)
 
 def create_views(n):
     global vistas, canvases, labels, image_windows, scrollbars_v, scrollbars_h
@@ -93,6 +95,8 @@ def create_views(n):
         labels.append(label)
         image_window = canvas.create_window(0, 0, anchor=NW, window=label)
         image_windows.append(image_window)
+
+        #scrollbar
         scrollbar_v = Scrollbar(canvas, orient=VERTICAL)
         scrollbar_h = Scrollbar(canvas, orient=HORIZONTAL)
         scrollbar_v.pack(side=RIGHT, fill=Y)
@@ -102,18 +106,25 @@ def create_views(n):
         canvas.config(yscrollcommand=scrollbars_v[i].set, xscrollcommand=scrollbars_h[i].set)
         scrollbars_v[i].config(command=canvas.yview)
         scrollbars_h[i].config(command=canvas.xview)
+
+        #botones
         button_frame = Frame(canvas)
         button_frame.pack(side=BOTTOM, anchor=SW, padx=10, pady=10)
         zoom_in_button = ttk.Button(button_frame, image=zoom_in_image, command=lambda i=i: zoom_in(i))
         zoom_out_button = ttk.Button(button_frame, image=zoom_out_image, command=lambda i=i: zoom_out(i))
         open_on_3d_button = ttk.Button(button_frame, text="Abrir en 3D", command=lambda i=i: openOn3D())
+        axial_button = ttk.Button(button_frame, text="Vista axial", command=lambda i=i: vistas_corte(image_stack, 1))
+        coronal_button = ttk.Button(button_frame, text="Vista coronal", command=lambda i=i: vistas_corte(image_stack, 2))
+        sagital_button = ttk.Button(button_frame, text="Vista sagital", command=lambda i=i: vistas_corte(image_stack, 3))
         zoom_in_button.pack(side=TOP)
         zoom_out_button.pack(side=TOP)
         open_on_3d_button.pack(side=TOP)
+        axial_button.pack(side=TOP, anchor='center')
+        coronal_button.pack(side=TOP, anchor='center')
+        sagital_button.pack(side=TOP, anchor='center')
 
     frame.update_idletasks()
     center_images()
-
 
 def menubar_shortcut(event=None):
     menubar = Menu()
@@ -131,9 +142,9 @@ def menubar_shortcut(event=None):
     open_recent.add_command(label="2", command=lambda: create_views(2))
     open_recent.add_command(label="3", command=lambda: create_views(3))
     viewmenu.add_separator()
-    viewmenu.add_command(label="Vista axial")
-    viewmenu.add_command(label="Vista coronal")
-    viewmenu.add_command(label="Vista sagital")
+    viewmenu.add_command(label="Vista axial", command=lambda: vistas_corte(image_stack,1))
+    viewmenu.add_command(label="Vista coronal", command=lambda: vistas_corte(image_stack,2))
+    viewmenu.add_command(label="Vista sagital", command=lambda: vistas_corte(image_stack,3))
 
     app.config(menu=menubar)
 
@@ -151,6 +162,8 @@ app.iconbitmap(".\\Visualizador\\IMG\\Foto_Logo.ico")
 menubar_shortcut()
 frame = Frame(app)
 frame.pack(fill=BOTH, expand=YES)
+
+#scrollbars
 scrollbars_v = []
 scrollbars_h = []
 scrollbar_v = Scrollbar(frame, orient=VERTICAL)
@@ -159,6 +172,8 @@ scrollbar_h = Scrollbar(app, orient=HORIZONTAL)
 scrollbar_h.pack(side=BOTTOM, fill=X)
 scrollbars_v.append(scrollbar_v)
 scrollbars_h.append(scrollbar_h)
+
+#zoom
 zoom_in_image = PhotoImage(file=".\\Visualizador\\IMG\\acercarse.png")
 zoom_out_image = PhotoImage(file=".\\Visualizador\\IMG\\alejarse.png")
 adjust_screen_size()
