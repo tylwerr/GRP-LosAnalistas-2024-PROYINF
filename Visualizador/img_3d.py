@@ -2,7 +2,6 @@ import os
 import numpy as np
 import pydicom
 from mayavi import mlab
-from tkinter import *
 
 def cargar_3d(dir_path):
     lista_archivos = [os.path.join(dir_path, nombre_archivo) for nombre_archivo in os.listdir(dir_path) if nombre_archivo.endswith('.dcm')]
@@ -14,14 +13,9 @@ def cargar_3d(dir_path):
         imagen_stack.append(imagen_array)
 
     imagen_stack = np.array(imagen_stack)
-    return imagen_stack
-'''
-def abrir_img_3d(dir_path):
-    imagen_stack = get_3d_matrix(dir_path)
     imagen_escalada_stack = imagen_stack / np.max(imagen_stack)
     return imagen_escalada_stack
-'''
-    
+
 def abrir_img_3d(image_stack):
     mlab.figure() 
     volumen = mlab.pipeline.volume(mlab.pipeline.scalar_field(image_stack), vmin=0.0, vmax=1.0) #Los parametros dan el color
@@ -47,6 +41,6 @@ def vistas_corte(image_stack, tipo_vista):
     
     return vista_normalizada
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     directorio = r"..\GRP-LosAnalistas-2024-PROYINF\DATOS_DICOM\BSSFP"
     abrir_img_3d(directorio)
