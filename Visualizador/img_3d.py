@@ -17,9 +17,14 @@ def cargar_3d(dir_path):
     return imagen_escalada_stack
 
 def abrir_img_3d(image_stack):
-    mlab.figure() 
-    volumen = mlab.pipeline.volume(mlab.pipeline.scalar_field(image_stack), vmin=0.0, vmax=1.0) #Los parametros dan el color
-    mlab.show()
+
+    if image_stack is not None:
+        mlab.figure() 
+        volumen = mlab.pipeline.volume(mlab.pipeline.scalar_field(image_stack), vmin=0.0, vmax=1.0) #Los parametros dan el color
+        mlab.show()
+
+    else:
+        return None
 
 def vistas_corte(image_stack, tipo_vista):
     #vista axial
