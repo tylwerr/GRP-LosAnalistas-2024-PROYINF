@@ -76,7 +76,7 @@ def agregar_corte(image_stack, tipo_vista, i):
 def zoom_in(view_index):
     global images_vista
 
-    if images_vista[view_index]:
+    if 0 <= view_index < len(images_vista) and images_vista[view_index]:
         image = images_vista[view_index][0]
         width, height = image.size
         zoomed_image = image.resize((int(width * 1.1), int(height * 1.1)), Image.BICUBIC)
@@ -86,7 +86,7 @@ def zoom_in(view_index):
 def zoom_out(view_index):
     global images_vista
 
-    if images_vista[view_index]:
+    if 0 <= view_index < len(images_vista) and images_vista[view_index]:
         image = images_vista[view_index][0]
         width, height = image.size
         zoomed_image = image.resize((int(width * 0.9), int(height * 0.9)), Image.BICUBIC)
