@@ -46,6 +46,6 @@ def vistas_corte(image_stack, tipo_vista):
     
     return vista_normalizada
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     directorio = r"..\GRP-LosAnalistas-2024-PROYINF\DATOS_DICOM\BSSFP"
     abrir_img_3d(directorio)
