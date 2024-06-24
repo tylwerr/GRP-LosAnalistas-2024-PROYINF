@@ -31,4 +31,6 @@ Librerías del lenguaje:
 Luego debe descargar las carpetas presentes: DATOS_DICOM , Visualizador.
 
 Una vez descargado, ejecute el archivo "visualizador.py" que se encuentra en la carpeta "Visualizador" para que comience el programa, para salir solo cierre la ventana.
-Para que funcionen las opciones y botones, debe seleccionar una imagen de cualquiera de las carpetas de "DATOS_DICOM", si no hace lo anterior, el programa no funcionará.
+
+- Para que funcionen las opciones y botones, debe seleccionar una imagen de cualquiera de las carpetas de "DATOS_DICOM", si no hace lo anterior, el programa no funcionará.
+- Si abre la imagen en 3D, debe cerrar el apartado 3D antes de seguir utilizando el visualizador. 
