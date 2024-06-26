@@ -14,6 +14,9 @@ Para acceder a la wiki, ir la siguiente [enlace](https://github.com/tylwerr/GRP-
 ## Video del prototipo
 Para acceder al video sobre el visualizador, ir al siguiente [enlace](https://youtu.be/In0gr04gF_E)
 
+## Video resultado final
+Para acceder al video sobre el resultado final, ir al siguiente [enlace](https://youtu.be/34fRJNLTTV0)
+
 ## Requerimientos e instrucciones de uso del programa
 
 Para poder correr el programa y mostrar el prototipo/avance, debe tener instalado lo siguiente:
