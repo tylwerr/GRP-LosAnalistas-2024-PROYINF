@@ -7,6 +7,27 @@ Grupo del paralelo 200, integrantes:
 - Benjamín Daza 202173574-7
 - Sebastián Von Kunowsky 202173560-7
 
+## Proyecto a continuar
+- Nosotros como grupo hemos tomado la decisión de (seguir con el proyecto trabajado, el cual es la vizualización de un volumen en las 3 direcciones ortogonales)
+
+## Autoevaluacion, Alphas:
+*Sistema de software*
+    - Estado: _Operacional_, ya que nuestro proyecto se finalizó pero hubieron algunos puntos del proyecto los que no se pudieron terminar.  
+*Forma de trabajo*
+    - Estado: _Trabajando bien_, ya que a pesar de que se trabajó de una forma eficiente como grupo, si hubieron bastantes descoordinaciones en la comunicación y organización.
+*Interesados*
+    - Estado: _Representado_, ya que nosotros abordamos las necesidades y expectativas de los interesados claves.
+*Oportunidad*
+    - Estado: _Abordable_, ya que la solución la hemos implementado y probado de forma correcta y satisfactoria.
+*Requisitos*
+    - Estado: _Concebidos_, ya que se ha identificado la necesidad a resolver.
+*Equipo*
+    - Estado: _Funcionando_, ya que como grupo estuvimos completamente comprometidos y operativos con el proyecto.
+*Trabajo*
+    - Estado: (depende lo que diga el ayudante)
+
+## Riesgos identificados
+
 # Semestre anterior (2024-1)
 Wiki: Para acceder a la wiki, ir la siguiente [enlace](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF/wiki#wiki-grupo-losanalistas)
 
