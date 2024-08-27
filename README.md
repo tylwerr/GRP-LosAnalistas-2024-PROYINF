@@ -13,25 +13,18 @@ Grupo del paralelo 200, integrantes:
 ## Autoevaluacion, Alphas:
 * **Sistema de software**
     - Estado: _Operacional_, ya que nuestro proyecto se finalizó pero hubieron algunos puntos del proyecto los que no se pudieron terminar.  
-    
 * **Forma de trabajo**
     - Estado: _Trabajando bien_, ya que a pesar de que se trabajó de una forma eficiente como grupo, si hubieron bastantes descoordinaciones en la comunicación y organización.
-    
 * **Interesados**
     - Estado: _Representado_, ya que nosotros abordamos las necesidades y expectativas de los interesados claves.
-    
 * **Oportunidad**
     - Estado: _Abordable_, ya que la solución la hemos implementado y probado de forma correcta y satisfactoria.
-    
 * **Requisitos**
     - Estado: _Concebidos_, ya que se ha identificado la necesidad a resolver.
-    
 * **Equipo**
     - Estado: _Funcionando_, ya que como grupo estuvimos completamente comprometidos y operativos con el proyecto.
-    
 * **Trabajo**
     - Estado: (depende lo que diga el ayudante)
-
 ## Riesgos identificados
 
 # Semestre anterior (2024-1)
