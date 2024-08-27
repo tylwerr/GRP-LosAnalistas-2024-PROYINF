@@ -26,7 +26,7 @@ Grupo del paralelo 200, integrantes:
 * **Trabajo**
     - Estado: (depende lo que diga el ayudante)
 ## Riesgos identificados
-
+* depende de lo que diga el ayudante
 # Semestre anterior (2024-1)
 Wiki: Para acceder a la wiki, ir la siguiente [enlace](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF/wiki#wiki-grupo-losanalistas)
 
