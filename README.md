@@ -11,19 +11,25 @@ Grupo del paralelo 200, integrantes:
 - Nosotros como grupo hemos tomado la decisión de (seguir con el proyecto trabajado, el cual es la vizualización de un volumen en las 3 direcciones ortogonales)
 
 ## Autoevaluacion, Alphas:
-*Sistema de software*
+* **Sistema de software**
     - Estado: _Operacional_, ya que nuestro proyecto se finalizó pero hubieron algunos puntos del proyecto los que no se pudieron terminar.  
-*Forma de trabajo*
+    
+* **Forma de trabajo**
     - Estado: _Trabajando bien_, ya que a pesar de que se trabajó de una forma eficiente como grupo, si hubieron bastantes descoordinaciones en la comunicación y organización.
-*Interesados*
+    
+* **Interesados**
     - Estado: _Representado_, ya que nosotros abordamos las necesidades y expectativas de los interesados claves.
-*Oportunidad*
+    
+* **Oportunidad**
     - Estado: _Abordable_, ya que la solución la hemos implementado y probado de forma correcta y satisfactoria.
-*Requisitos*
+    
+* **Requisitos**
     - Estado: _Concebidos_, ya que se ha identificado la necesidad a resolver.
-*Equipo*
+    
+* **Equipo**
     - Estado: _Funcionando_, ya que como grupo estuvimos completamente comprometidos y operativos con el proyecto.
-*Trabajo*
+    
+* **Trabajo**
     - Estado: (depende lo que diga el ayudante)
 
 ## Riesgos identificados
