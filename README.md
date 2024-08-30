@@ -8,32 +8,32 @@ Grupo del paralelo 200, integrantes:
 - Sebastián Von Kunowsky 202173560-7
 
 ## Proyecto a continuar
-- Nosotros como grupo hemos tomado la decisión de hacer el proyecto de generar MPR - con cambios de orienteación (Multiplanar reformatting)
-## Autoevaluacion, Alphas:
+- Como grupo hemos tomado la decisión de hacer el proyecto de generar MPR - con cambios de orienteación (Multiplanar reformatting)
+## Autoevaluación, Alphas:
 * **Sistema de software**
-    - Estado: _Con arquitectura seleccionada_. Apenas escogimos el tema del proyecto, y aunque no se ha desarrollado el software, ya hemos escogido una arquitectura o enfoque inicial para iniciar el proyecto.
+    - Estado: _Con arquitectura seleccionada_. Escogimos recientemente el tema del proyecto, y aunque no se ha desarrollado el software, ya hemos analizado una arquitectura o enfoque inicial para el proyecto.
 * **Forma de trabajo**
-    - Estado: _Fundamentos establecidos_. Ya hemos definido cómo trabajaremos en el proyecto, estableciendo las bases de los métodos de trabajo.
+    - Estado: _Fundamentos establecidos_. Establecimos las bases de los métodos de trabajo, distribuyendo tareas y coordinando días disponibles para trabajar.
 * **Interesados**
-    - Estado: _Identificados_. Hemos identificado quiénes son los interesados claves (miembros del equipo, posibles clientes, etc.), pero aún no hemos avanzado en involucarlos activamente. 
+    - Estado: _Identificados_. Identificamos quiénes son los interesados claves (miembros del equipo, posibles clientes, etc.), pero aún no nos incolucramos activamente. 
 * **Oportunidad**
-    - Estado: _Concebida_. Hemos identificado la necesidad o la oportunidad en la que trabajaremos, pero aún no hemos evaluado su viabilidad o comenzado a implementarla.
+    - Estado: _Concebida_. Identificamos la necesidad o la oportunidad en la que trabajaremos, pero aún no hemos evaluado su viabilidad o comenzado a implementarla.
 * **Requisitos**
     - Estado: _Necesidades determinadas_. Estamos en la fase de determinar las necesidades y expectativas del proyecto, los requisitos específicos aún no se han delimitado completamente.
 * **Equipo**
-    - Estado: _Formado_. Tenemos un equipo de trabajo establedico, pero estamos en las primeras estapas en donde nos estamos preparando para comenzar.
+    - Estado: _Formado_. Formamos un equipo de trabajo establedico, estando por el momento en las primeras estapas de organización.
 * **Trabajo**
-    - Estado: _Iniciado_. El proyecto se ha comenzado, ya que hemos escogido el tema y estamos en la fase de planificación inicial.
+    - Estado: _Iniciado_. El proyecto se ha comenzado, escogido el tema y estamos en la fase de planificación inicial.
  
 *  **Alphas prioritarios**
     1. _Oportunidad_: Es un alpha crítico que representa la base del proyecto, siendo que sin una oportunidad bien reconocida, el poyecto puede carecer de dirección clara.
 
-         **_Medidas_**: Realizar un análñisis detallado de la viabilidad técnica, económica y operativa de la solución propuesta. Establecer y documentar claramente el valor que el proyecto aportará a los interesados, ya sea en términos de beneficios financieros, mejoras en procesos o satisfacción del usuario.
+         **_Medidas_**: Realizar un análisis detallado de la viabilidad técnica, económica y operativa de la solución propuesta. Establecer y documentar claramente el valor que el proyecto aportará a los interesados, ya sea en términos de beneficios financieros, mejoras en procesos o satisfacción del usuario.
 
 
-    2. _Requisitos_ : Es fundamental porque define qué se va a constuir. Le pone un limite al alcance que hace que todos los miembros del equipo y los interesados tengan una compresión clara y compartida de lo que el proyecto debe lograr.
+    2. _Requisitos_ : Es fundamental porque define qué se va a constuir, haciendo que todos los miembros del equipo y los interesados tengan una compresión clara y compartida de lo que el proyecto debe lograr.
 
-         **_Medidas_**: Organizar reuniones con todos los interesados y el equipo para definir y acordar el alcance del proyecto. Crear un documento de alcance formal que detalle todas las funcionalidades del proyecto y finalmente implemetar un proceso de gestión del alcance para controlar los cambios y evita que el proyecto se desvíe de sus objetivos iniciales. 
+         **_Medidas_**: Organizar reuniones con todos los interesados y el equipo para definir y acordar el alcance del proyecto. Crear un documento de alcance formal que detalle todas las funcionalidades del proyecto y finalmente implemetar un proceso de gestión del alcance para controlar los cambios y evitar que el proyecto se desvíe de sus objetivos iniciales. 
 ## Riesgos identificados
 * depende de lo que diga el ayudante
 # Semestre anterior (2024-1)
