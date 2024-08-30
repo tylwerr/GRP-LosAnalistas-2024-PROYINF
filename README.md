@@ -8,23 +8,32 @@ Grupo del paralelo 200, integrantes:
 - Sebastián Von Kunowsky 202173560-7
 
 ## Proyecto a continuar
-- Nosotros como grupo hemos tomado la decisión de (seguir con el proyecto trabajado, el cual es la vizualización de un volumen en las 3 direcciones ortogonales)
-
+- Nosotros como grupo hemos tomado la decisión de hacer el proyecto de generar MPR - con cambios de orienteación (Multiplanar reformatting)
 ## Autoevaluacion, Alphas:
 * **Sistema de software**
-    - Estado: _Operacional_, ya que nuestro proyecto se finalizó pero hubieron algunos puntos del proyecto los que no se pudieron terminar.  
+    - Estado: _Con arquitectura seleccionada_. Apenas escogimos el tema del proyecto, y aunque no se ha desarrollado el software, ya hemos escogido una arquitectura o enfoque inicial para iniciar el proyecto.
 * **Forma de trabajo**
-    - Estado: _Trabajando bien_, ya que a pesar de que se trabajó de una forma eficiente como grupo, si hubieron bastantes descoordinaciones en la comunicación y organización.
+    - Estado: _Fundamentos establecidos_. Ya hemos definido cómo trabajaremos en el proyecto, estableciendo las bases de los métodos de trabajo.
 * **Interesados**
-    - Estado: _Representado_, ya que nosotros abordamos las necesidades y expectativas de los interesados claves.
+    - Estado: _Identificados_. Hemos identificado quiénes son los interesados claves (miembros del equipo, posibles clientes, etc.), pero aún no hemos avanzado en involucarlos activamente. 
 * **Oportunidad**
-    - Estado: _Abordable_, ya que la solución la hemos implementado y probado de forma correcta y satisfactoria.
+    - Estado: _Concebida_. Hemos identificado la necesidad o la oportunidad en la que trabajaremos, pero aún no hemos evaluado su viabilidad o comenzado a implementarla.
 * **Requisitos**
-    - Estado: _Concebidos_, ya que se ha identificado la necesidad a resolver.
+    - Estado: _Necesidades determinadas_. Estamos en la fase de determinar las necesidades y expectativas del proyecto, los requisitos específicos aún no se han delimitado completamente.
 * **Equipo**
-    - Estado: _Funcionando_, ya que como grupo estuvimos completamente comprometidos y operativos con el proyecto.
+    - Estado: _Formado_. Tenemos un equipo de trabajo establedico, pero estamos en las primeras estapas en donde nos estamos preparando para comenzar.
 * **Trabajo**
-    - Estado: (depende lo que diga el ayudante)
+    - Estado: _Iniciado_. El proyecto se ha comenzado, ya que hemos escogido el tema y estamos en la fase de planificación inicial.
+ 
+*  **Alphas prioritarios**
+    1. _Oportunidad_: Es un alpha crítico que representa la base del proyecto, siendo que sin una oportunidad bien reconocida, el poyecto puede carecer de dirección clara.
+
+         **_Medidas_**: Realizar un análñisis detallado de la viabilidad técnica, económica y operativa de la solución propuesta. Establecer y documentar claramente el valor que el proyecto aportará a los interesados, ya sea en términos de beneficios financieros, mejoras en procesos o satisfacción del usuario.
+
+
+    2. _Requisitos_ : Es fundamental porque define qué se va a constuir. Le pone un limite al alcance que hace que todos los miembros del equipo y los interesados tengan una compresión clara y compartida de lo que el proyecto debe lograr.
+
+         **_Medidas_**: Organizar reuniones con todos los interesados y el equipo para definir y acordar el alcance del proyecto. Crear un documento de alcance formal que detalle todas las funcionalidades del proyecto y finalmente implemetar un proceso de gestión del alcance para controlar los cambios y evita que el proyecto se desvíe de sus objetivos iniciales. 
 ## Riesgos identificados
 * depende de lo que diga el ayudante
 # Semestre anterior (2024-1)
