@@ -4,8 +4,8 @@ Grupo del paralelo 200, integrantes:
 
 - Daniel Maturana Cristino 202173575-5
 - Carlos Arévalo Guajardo 202173501-1
-- Benjamín Daza 202173574-7
-- Sebastián Von Kunowsky 202173560-7
+- Benjamín Daza Jiménez 202173574-7
+- Sebastián Von Kunowsky Lepe 202173560-7
 
 ## Proyecto a continuar
 - Como grupo hemos tomado la decisión de hacer el proyecto de generar MPR - con cambios de orienteación (Multiplanar reformatting)
