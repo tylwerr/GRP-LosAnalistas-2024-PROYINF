@@ -35,7 +35,14 @@ Grupo del paralelo 200, integrantes:
 
          **_Medidas_**: Organizar reuniones con todos los interesados y el equipo para definir y acordar el alcance del proyecto. Crear un documento de alcance formal que detalle todas las funcionalidades del proyecto y finalmente implemetar un proceso de gestión del alcance para controlar los cambios y evitar que el proyecto se desvíe de sus objetivos iniciales. 
 ## Riesgos identificados
-* depende de lo que diga el ayudante
+Consideramos los siguientes riesgos que pueden afectar el desarrollo del proyecto:
+*  **Falta de tiempo de desarrollo**: Este riesgo puede suceder debido a la carga académica del equipo de trabajo, afectando al desarrollo del proyecto. El riesgo tendría un impacto alto y una probabilidad de ocurrencia alta, una medida de mitigación es tener una buena organización y comunicación con cada integrante del equipo. Este riego está activo.
+
+* **La complejidad en implementar los requisitos del cliente (librerías, lenguaje, etc.)**: Este riesgo puede suceder debido a la alta dificultad de la implementación del proyecto y los requisitos del cliente, afectando directamente al desarrollo de este. El riesgo tendría un impacto alto y una probabilidad de ocurrencia media, una medida de mitigación para este es la preparación y disposición del equipo de trabajo para adaptarse a las necesidades del proyecto. Este riesgo está activo.
+
+* **Mala comunicación con el cliente**: Este riego puede suceder debido a la falta de reuniones del equipo con el cliente, lo que afecta el recibimiento del proyecto de parte del cliente. El riesgo tiene un impacto medio y una probabilidad de ocurrencia baja, una medida de mitigación es tener reuniones periódicas con el cliente. Este riesgo está activo.
+
+Estos riesgos suponen un importante peligro, ya que podrían afectar en la calidad del proyecto a desarrollar, quedando insatisfecho tanto el cliente como nuestro equipo de trabajo. 
 # Semestre anterior (2024-1)
 Wiki: Para acceder a la wiki, ir la siguiente [enlace](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF/wiki#wiki-grupo-losanalistas)
 
