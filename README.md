@@ -8,7 +8,7 @@ Grupo del paralelo 200, integrantes:
 - Sebastián Von Kunowsky Lepe 202173560-7
 
 ## Proyecto a continuar
-- Como grupo hemos tomado la decisión de hacer el proyecto de generar MPR - con cambios de orientación (Multiplanar reformatting)
+- Como grupo hemos tomado la decisión de hacer el proyecto de generar MPR - con cambios de orientación (Multiplanar reformatting) (Esto dependerá de la información que nos entregue el cliente en la reunión acordada para el próximo Lunes)
 ## Autoevaluación, Alphas:
 * **Sistema de software**
     - Estado: _Con arquitectura seleccionada_. Escogimos recientemente el tema del proyecto, y aunque no se ha desarrollado el software, ya hemos analizado una arquitectura o enfoque inicial para el proyecto.
