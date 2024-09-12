@@ -7,6 +7,8 @@ Grupo del paralelo 200, integrantes:
 - Benjamín Daza Jiménez 202173574-7
 - Sebastián Von Kunowsky Lepe 202173560-7
 
+Wiki: Para acceder a la wiki, ir la siguiente [enlace](https://github.com/tylwerr/GRP-LosAnalistas-2024-PROYINF/wiki#wiki-grupo-losanalistas)
+
 ## Proyecto a continuar
 - Como grupo hemos tomado la decisión de hacer el proyecto de generar MPR - con cambios de orientación (Multiplanar reformatting) (Esto dependerá de la información que nos entregue el cliente en la reunión acordada para el próximo Lunes)
 ## Autoevaluación, Alphas:
