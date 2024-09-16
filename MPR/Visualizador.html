@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Visualizador</title>
+</head>
+<body id="body">
+    <div class="menuNav"></div>
+    
+    <div id="Card" class="container">
+        <div class="card" style="width: 18rem;">
+            <img src="Imagenes/Radiografía Card.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">Subir archivo</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+    <script>
+        $(document).ready(function () {
+            $('.menuNav').load('./Navbar.html');
+        });
+    </script>
+</html>

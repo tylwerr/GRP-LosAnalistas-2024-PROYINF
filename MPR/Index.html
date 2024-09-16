@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>MPR</title>
+</head>
+
+<body id="body">
+    <div id="NavBar" class="menuNav"></div>
+    <div id="Row" class="row justify-content-center">
+        <div id="Columna1" class="col-4">
+            <div class="card">
+                <h5 class="card-header">Información principal</h5>
+                <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
+            
+        <div id="Columna2" class="col-6">
+            <div id="Card1" class="card">
+                <h5 class="card-header">Información del tipo de archivo</h5>
+                <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header">Visualizador</h5>
+                <div class="card-body">
+                <h5 class="card-title">Instrucciones:</h5>
+                <p class="card-text">- Paso1.</p>
+                <p class="card-text">- Paso2.</p>
+                <p class="card-text">- Paso3.</p>
+                <a href="Visualizador.html" class="btn btn-primary">Ir al visualizador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+    <script>
+        $(document).ready(function () {
+            $('.menuNav').load('./Navbar.html');
+        });
+    </script>
+</html>

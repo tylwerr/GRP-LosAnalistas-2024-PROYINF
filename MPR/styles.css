@@ -1,0 +1,28 @@
+#body{
+    background-color: #F5F5F5;
+}
+#Columna1{
+    justify-content: center;
+    width: 50%;
+    margin-right: 2%;
+}
+#Columna2{
+    justify-content: center;
+    width: 40%;
+}
+#Card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+#Card1{
+    margin-bottom: 2%;
+}
+#NavBar{
+    width: 100%;
+    margin-bottom: 1%;
+}
+#Row{
+    width: 100%;
+}
