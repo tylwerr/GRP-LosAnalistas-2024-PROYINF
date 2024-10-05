@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/cornerstone-core"></script>
+    <script src="https://unpkg.com/cornerstone-math"></script>
+    <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
+    <script src="https://unpkg.com/dicom-parser"></script>
+
+    <title>Visualizador DICOM</title>
+    <style>
+        #dicom-image {
+            position: relative;
+            width: 512px;
+            height: 512px;
+            background-color: black;
+        }
+        .point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: red;
+            transform: translate(-50%, -50%);
+        }
+        .line {
+            position: absolute;
+            background-color: red;
+            height: 2px;
+            transform-origin: 0 0;
+        }
+    </style>
+</head>
+<body id="body">
+    <div class="menuNav"></div>
+    <div class="visualizador-container">
+        <div class="menu-bar">
+            <ul>
+                <li>
+                    <a href="#" class="menu-toggle">Archivo</a>
+                    <ul class="submenu">
+                        <li><a href="#" id="upload-files">Subir</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="menu-toggle" id="ruler-toggle">Regla</a>
+                </li>
+            </ul>
+        </div>
+    
+        <div id="dicom-image"></div>
+        <input type="file" id="file-input" accept=".dcm" multiple style="display:none">
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            $('.menuNav').load('./Navbar.html');
+            $('.submenu').hide();
+
+            $('.menu-toggle').on('click', function(e) {
+                e.preventDefault();
+                $(this).siblings('.submenu').slideToggle(); 
+            });
+
+            $('#upload-files').on('click', function(e) {
+                e.preventDefault();
+                $('#file-input').click(); 
+            });
+
+            const dicomImageElement = document.getElementById('dicom-image');
+            cornerstone.enable(dicomImageElement);
+
+            cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+            cornerstoneWADOImageLoader.configure({
+                beforeLoad: function(imageId) {
+                    return new Promise((resolve, reject) => {
+                        resolve();
+                    });
+                }
+            });
+
+            $('#file-input').on('change', function() {
+                const files = this.files;
+                if (files.length > 0) {
+                    let imageStack = [];
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const dicomBlob = new Blob([event.target.result]);
+                            const dicomUrl = URL.createObjectURL(dicomBlob);
+                            cornerstone.loadAndCacheImage('wadouri:' + dicomUrl).then(function(image) {
+                                cornerstone.displayImage(dicomImageElement, image);
+                                imageStack.push(image);
+                            }).catch(function(error) {
+                                console.error('Error al cargar la imagen DICOM:', error);
+                            });
+                        };
+                        reader.readAsArrayBuffer(file);
+                    }
+                } else {
+                    alert("Por favor, seleccione al menos un archivo DICOM");
+                }
+            });
+            let points = [];
+
+            $('#ruler-toggle').on('click', function(e) {
+                e.preventDefault();
+                points = []; 
+                $(dicomImageElement).off('click').on('click', addPoint);
+            });
+
+            function addPoint(event) {
+                const rect = dicomImageElement.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                points.push({ x, y });
+
+
+                const pointDiv = $('<div class="point"></div>').css({ left: x + 'px', top: y + 'px' });
+                $(dicomImageElement).append(pointDiv);
+
+                if (points.length === 2) {
+                    drawLine(points[0], points[1]);
+                    const distance = calculateDistance(points[0], points[1]);
+                    alert(`Distancia: ${distance.toFixed(2)} px`);
+                    $(dicomImageElement).off('click'); 
+                }
+            }
+
+            function drawLine(point1, point2) {
+                const lineDiv = $('<div class="line"></div>');
+                const dx = point2.x - point1.x;
+                const dy = point2.y - point1.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+                lineDiv.css({
+                    width: length + 'px',
+                    left: point1.x + 'px',
+                    top: point1.y + 'px',
+                    transform: `rotate(${angle}deg)`
+                });
+
+                $(dicomImageElement).append(lineDiv);
+            }
+
+            function calculateDistance(point1, point2) {
+                const dx = point2.x - point1.x;
+                const dy = point2.y - point1.y;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+        });
+    </script>
+</body>
+</html>
