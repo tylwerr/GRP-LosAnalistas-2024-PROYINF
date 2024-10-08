@@ -4,7 +4,7 @@ import requests
 class TestUploadDICOM(unittest.TestCase):
 
     def test_subir_dicom_valido(self):
-        url = "https://unpkg.com/cornerstone-wado-image-loader"
+        url = "http://localhost:5500/MPR/backend/JS_Visualizador.js"
         with open('../../DATOS_DICOM/Gd-MRA/IMG-0001-00001.dcm', 'rb') as f:
             files = {'file': f}  #Simulación de archivo DICOM válido
             response = requests.post(url, files=files)
@@ -12,7 +12,7 @@ class TestUploadDICOM(unittest.TestCase):
             self.assertEqual(response.json().get("message"), "Imagen DICOM subida correctamente")
 
     def test_subir_dicom_no_valido(self):
-        url = "https://unpkg.com/cornerstone-wado-image-loader"
+        url = "http://localhost:5500/MPR/backend/JS_Visualizador.js"
         with open('image.png', 'rb') as f:
             files = {'file': f}  #Simulación de archivo no válido
             response = requests.post(url, files=files)
