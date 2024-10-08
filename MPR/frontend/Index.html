@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>MPR</title>
+</head>
+
+<body id="body">
+    <div id="NavBar" class="menuNav"></div>
+    <div id="Row" class="row justify-content-center">
+        <div id="Columna1" class="col-4">
+            <div class="card">
+                <h5 class="card-header">Información principal</h5>
+                <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
+            
+        <div id="Columna2" class="col-6">
+            <div id="Card1" class="card">
+                <h5 class="card-header">Información del tipo de archivo</h5>
+                <div class="card-body">
+                <p class="card-text">- Asegúrate de que el archivo sea un DICOM (.dcm o .dicom).</p>
+                <p class="card-text">- Verifica que el archivo contenga tanto la imagen 3D como los metadatos necesarios.</p>
+                <p class="card-text">- Si el archivo fue creado por un sistema específico, asegúrate de que sea compatible con nuestra aplicación.</p>
+                <p class="card-text">- Si el archivo no se carga, verifica que no esté corrupto y que esté en el formato correcto.</p>
+                <p class="card-text">- Si encuentras problemas al subir el archivo, contacta al soporte técnico.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header">Visualizador</h5>
+                <div class="card-body">
+                <h5 class="card-title">Instrucciones:</h5>
+                <p class="card-text">- Haz clic en el botón "Ir a Visualizador" en la página principal.</p>
+                <p class="card-text">- En la pestaña del visualizador, haz clic en el botón "Archivo" y selecciona tu archivo DICOM desde tu dispositivo.</p>
+                <p class="card-text">- Una vez subido, la imagen DICOM se mostrará automáticamente en la pantalla.</p>
+                <p class="card-text">- Usa las herramientas disponibles para hacer mediciones o ajustes en la imagen según necesites.</p>
+                <a href="Visualizador.html" class="btn btn-primary">Ir al visualizador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+    <script>
+        $(document).ready(function () {
+            $('.menuNav').load('./Navbar.html');
+        });
+    </script>
+</html>

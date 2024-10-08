@@ -1,0 +1,82 @@
+#body{
+    background-color: #F5F5F5;
+}
+.menu-bar {
+    background-color: #333; 
+    color: white; 
+    padding: 10px;
+    position: relative; 
+}
+.visualizador-container {
+    background-color: black; 
+    min-height: calc(100vh - 57px); 
+    color: white; 
+}
+.menu-bar ul {
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+}
+.menu-bar li {
+    position: relative;
+    margin-right: 20px; 
+}  
+
+.menu-bar a {
+    color: white; 
+    text-decoration: none; 
+    padding: 5px 10px; 
+}
+
+.menu-bar a:hover {
+    background-color: #555; 
+    border-radius: 4px; 
+}
+.submenu {
+    display: none; 
+    position: absolute; 
+    background-color: #444; 
+    min-width: 120px;
+    z-index: 1000; 
+    margin-top: 5px; 
+}
+.submenu li {
+    margin: 0; 
+}
+.submenu a {
+    display: block; 
+    padding: 8px; 
+    color: white; 
+    text-align: left; 
+    width: 230%;
+    box-sizing: border-box;
+}
+.submenu a:hover {
+    background-color: #666; 
+}
+#Columna1{
+    justify-content: center;
+    width: 50%;
+    margin-right: 2%;
+}
+#Columna2{
+    justify-content: center;
+    width: 40%;
+}
+#Card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+#Card1{
+    margin-bottom: 2%;
+}
+#NavBar{
+    width: 100%;
+    margin-bottom: 1%;
+}
+#Row{
+    width: 100%;
+}
