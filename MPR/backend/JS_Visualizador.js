@@ -7,7 +7,7 @@ $(document).ready(function () {
         $(this).siblings('.submenu').slideToggle(); 
     });
 
-    $('#upload-files').on('click', function(e) {
+    $('#upload-files').on('click', function(e) { 
         e.preventDefault();
         $('#file-input').click(); 
     });
@@ -24,7 +24,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#file-input').on('change', function() {
+    $('#file-input').on('change', function() { //Aqui se obtiene la imagen
         const files = this.files;
         if (files.length > 0) {
             let imageStack = [];
