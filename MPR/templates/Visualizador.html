@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/cornerstone-core"></script>
     <script src="https://unpkg.com/cornerstone-math"></script>
@@ -37,6 +37,12 @@
 </head>
 <body id="body">
     <div class="menuNav"></div>
+    <script>
+        $(document).ready(function () {
+            $('.menuNav').load('./navbar');
+        });
+    </script>
+    </script>
     <div class="visualizador-container">
         <div class="menu-bar">
             <ul>
@@ -56,6 +62,6 @@
         <input type="file" id="file-input" accept=".dcm" multiple style="display:none">
     </div>
     
-    <script src="/MPR/backend/JS_Visualizador.js"></script>
+    <script src="{{ url_for('static', filename='JS_Visualizador.js') }}"></script>
 </body>
 </html>
