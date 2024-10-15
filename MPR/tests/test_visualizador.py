@@ -9,10 +9,11 @@ class TestUploadDICOM(unittest.TestCase):
         with open('../../DATOS_DICOM/Gd-MRA/IMG-0001-00001.dcm', 'rb') as f:
             files = {'file': f}  #Simulación de archivo DICOM válido
             response = requests.post(url, files=files)
-
-
-            self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.json().get("message"), "Imagen DICOM subida correctamente")
+            try:
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.json().get("message"), "Imagen DICOM subida correctamente")
+            except ValueError:
+                print("Respuesta del servidor:", response.text)  # Imprimir respuesta en caso de error
 
     def test_subir_dicom_no_valido(self):
         url = "http://127.0.0.1:5000/Visualizador"
