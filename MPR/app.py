@@ -31,7 +31,7 @@ def visualizador():
         #verificar que el POST tenga parte file
         if 'file' not in request.files:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':  # Verifica si la solicitud es AJAX
-                return jsonify({"message": "No se seleccionó ningún archivo"}), 400
+                return 400
             return render_template('Visualizador.html',mensaje='falla1')
     
         file = request.files['file']
@@ -39,7 +39,7 @@ def visualizador():
         #verificar que no esté vacío
         if file.filename == '':
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':  # Verifica si la solicitud es AJAX
-                return jsonify({"message": "No se seleccionó ningún archivo"}), 400
+                return 400
             return render_template('Visualizador.html',mensaje='falla2')
         
         #archivo permitido
@@ -47,13 +47,13 @@ def visualizador():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':  # Verifica si la solicitud es AJAX
-                return jsonify({"message": "Imagen DICOM subida correctamente", "filename": filename}), 200
+                return 200
             return render_template('Visualizador.html',mensaje='listoo',archivo=file.filename) #archivo retornado
         
         else:
             #no es tipo dicom
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':  # Verifica si la solicitud es AJAX
-                return jsonify({"message": "Tipo de archivo no válido"}), 400
+                return 400
             return render_template('Visualizador.html',mensaje='falla3')
             
     #página predeterminada
