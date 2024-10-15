@@ -9,7 +9,11 @@
 }
 .visualizador-container {
     background-color: black; 
-    min-height: calc(100vh - 57px); 
+    min-height: calc(100vh - 57px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: white; 
 }
 .menu-bar ul {
@@ -79,4 +83,12 @@
 }
 #Row{
     width: 100%;
+}
+#Visualizador{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.alert{
+    margin-bottom: 15px;
 }

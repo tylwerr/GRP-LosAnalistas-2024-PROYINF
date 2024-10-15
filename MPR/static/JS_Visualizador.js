@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    $('.menuNav').load('./Navbar.html');
+    
+    $('.menuNav').load('/navbar');
     $('.submenu').hide();
 
     $('.menu-toggle').on('click', function(e) {
@@ -12,9 +13,14 @@ $(document).ready(function () {
         $('#file-input').click(); 
     });
 
-    const dicomImageElement = document.getElementById('dicom-image');
-    cornerstone.enable(dicomImageElement);
+    $('#select_file').on('click', function(){
+        if($(this).val()){
+            $('#upload_file').prop('disabled', false) //es habilitar el boton de subida
+        }
+    });
 
+    const dicomImageElement = document.getElementById('dicom-viewer');
+    cornerstone.enable(dicomImageElement);
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
     cornerstoneWADOImageLoader.configure({
         beforeLoad: function(imageId) {
@@ -24,29 +30,15 @@ $(document).ready(function () {
         }
     });
 
-    $('#file-input').on('change', function() { //Aqui se obtiene la imagen
-        const files = this.files;
-        if (files.length > 0) {
-            let imageStack = [];
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const dicomBlob = new Blob([event.target.result]);
-                    const dicomUrl = URL.createObjectURL(dicomBlob);
-                    cornerstone.loadAndCacheImage('wadouri:' + dicomUrl).then(function(image) {
-                        cornerstone.displayImage(dicomImageElement, image);
-                        imageStack.push(image);
-                    }).catch(function(error) {
-                        console.error('Error al cargar la imagen DICOM:', error);
-                    });
-                };
-                reader.readAsArrayBuffer(file);
-            }
-        } else {
-            alert("Por favor, seleccione al menos un archivo DICOM");
-        }
-    });
+    if(uploadFilename){
+        cornerstone.loadImage('wadouri:' + imageUrl).then(function (image){
+            cornerstone.displayImage(dicomImageElement, image);    
+        }).catch(function (error){
+            console.error('Error al cargar la imagen: ', error);
+        });
+
+        
+    }
 
     let points = [];
     $('#ruler-toggle').on('click', function(e) {

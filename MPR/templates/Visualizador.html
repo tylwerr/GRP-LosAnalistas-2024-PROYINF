@@ -12,28 +12,7 @@
     <script src="https://unpkg.com/dicom-parser"></script>
     
     <title>Visualizador DICOM</title>
-    <style>
-        #dicom-image {
-            position: relative;
-            width: 512px;
-            height: 512px;
-            background-color: black;
-        }
-        .point {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: red;
-            transform: translate(-50%, -50%);
-        }
-        .line {
-            position: absolute;
-            background-color: red;
-            height: 2px;
-            transform-origin: 0 0;
-        }
-    </style>
+
 </head>
 <body id="body">
     <div class="menuNav"></div>
@@ -42,26 +21,66 @@
             $('.menuNav').load('./navbar');
         });
     </script>
-    </script>
-    <div class="visualizador-container">
-        <div class="menu-bar">
-            <ul>
-                <li>
-                    <a href="#" class="menu-toggle">Archivo</a>
-                    <ul class="submenu">
-                        <li><a href="#" id="upload-files">Subir</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="menu-toggle" id="ruler-toggle">Regla</a>
-                </li>
-            </ul>
-        </div>
-    
-        <div id="dicom-image"></div>
-        <input type="file" id="file-input" accept=".dcm" multiple style="display:none">
+
+
+    {%if mensaje=='normal'%}
+    <div class="visualizador-container" id="Visualizador">
+        <form action="{{url_for('visualizador')}}" method="POST" enctype="multipart/form-data">
+            <p>
+                <input type="file" id="select-file" name="file" placeholder="file"></input>
+            </p>
+            <p>
+                <input type="submit" id="upload-file" value="Subir archivo Dicom"></input>
+            </p>
+        </form>
     </div>
+    {%endif%}
     
+
+    {%if mensaje=='falla1' or mensaje=='falla2' %}
+    <div class="visualizador-container" id="Visualizador">
+        <div class="alert alert-danger" role="alert">
+           No se ha subido un archivo.
+        </div>
+        <form action="{{url_for('visualizador')}}" method="POST" enctype="multipart/form-data">
+            <p>
+                <input type="file" id="select-file" name="file" placeholder="file"></input>
+            </p>
+            <p>
+                <input type="submit" id="upload-file" value="Subir archivo Dicom"></input>
+            </p>
+        </form>
+    </div>
+    {%endif%}
+    
+    
+    {% if mensaje=='falla3' %}
+    <div class="visualizador-container" id="Visualizador">
+        <div class="alert alert-danger" role="alert">
+            Archivo subido no es Dicom. Vuelva a intentarlo.
+        </div>
+        <form action="{{url_for('visualizador')}}" method="POST" enctype="multipart/form-data">
+            <p>
+                <input type="file" id="select-file" name="file" placeholder="file"></input>
+            </p>
+            <p>
+                <input type="submit" id="upload-file" value="Subir archivo Dicom"></input>
+            </p>
+        </form>
+    </div>
+    {% endif %}
+
+    
+    {%if mensaje=='listoo'%}
+    <div id="dicom-image" class="visualizador-container">
+        <div id="dicom-viewer" style="width:512px; height:512px; background-color:black;"></div>
+    </div>
+    <script>
+        var uploadFilename = "{{ archivo }}";
+        const imageUrl = "{{ url_for('static', filename='uploads/') }}" + uploadFilename; 
+    </script>
     <script src="{{ url_for('static', filename='JS_Visualizador.js') }}"></script>
+    {% endif %}
+    
 </body>
 </html>
