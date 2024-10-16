@@ -1,18 +1,18 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from werkzeug.utils import secure_filename  # manejar archivos subidos
+from werkzeug.utils import secure_filename  #manejar archivos subidos
 from flask_cors import CORS
 import pydicom
 
 UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'dcm'}  # solo se permite dicom
+ALLOWED_EXTENSIONS = {'dcm'}  #solo se permite dicom
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 CORS(app)
 
-# verifica que el archivo sea de extensión dicom
+#verifica que el archivo sea de extensión dicom
 def archivo_permitido(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -37,21 +37,21 @@ def visualizador():
     user_agent = request.headers.get('User-Agent')
 
     if request.method == 'POST':
-        # verificar que el POST tenga parte file
+        #verificar que el POST tenga parte file
         if 'file' not in request.files:
-            if 'unittest-script' in user_agent:  # Verifica si la solicitud es AJAX
+            if 'unittest-script' in user_agent:  #verifica si la solicitud es AJAX
                 return 'No se mandó un archivo', 400
             return render_template('Visualizador.html', mensaje='falla1')
 
         file = request.files['file']
 
-        # verificar que no esté vacío
+        #verificar que no esté vacío
         if file.filename == '':
-            if 'unittest-script' in user_agent:  # Verifica si la solicitud es AJAX
+            if 'unittest-script' in user_agent:  #verifica si la solicitud es AJAX
                 return 'Se mandó un archivo vacío', 400
             return render_template('Visualizador.html', mensaje='falla2')
 
-        # archivo permitido
+        #archivo permitido
         if file and archivo_permitido(file.filename):
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -69,9 +69,21 @@ def visualizador():
                     "BodyPartExamined": str(ds.get("BodyPartExamined", "N/A"))
                 }
 
+                year = dicom_info['StudyDate'][:4]
+                month = dicom_info['StudyDate'][4:6]
+                day = dicom_info['StudyDate'][6:8]
+                #cambio estructura de fecha
+                dicom_info['StudyDate'] = day + '/' + month + '/' + year
+
+                if 'anon' in dicom_info['PatientName']:
+                    dicom_info['PatientName'] = "Anónimo"
+                    
+                if 'anon' in dicom_info['PatientID']:
+                    dicom_info['PatientID'] = "Anónimo"
+
                 dicom_url = url_for('static', filename=f'uploads/{filename}')
 
-                # Verifica si la solicitud es AJAX
+                #verifica si la solicitud es AJAX
                 if 'unittest-script' in user_agent:
                     return 'Archivo DICOM subido correctamente', 200
 
@@ -87,12 +99,12 @@ def visualizador():
                 return render_template('Visualizador.html', mensaje='falla4', error=str(e))
 
         else:
-            # no es tipo dicom
-            if 'unittest-script' in user_agent:  # Verifica si la solicitud es AJAX
+            #no es tipo dicom
+            if 'unittest-script' in user_agent:  #verifica si la solicitud es AJAX
                 return 'Archivo subido no es tipo DICOM', 415
             return render_template('Visualizador.html', mensaje='falla3')
 
-    # página predeterminada
+    #página predeterminada
     return render_template('Visualizador.html', mensaje='normal')
 
 if __name__ == '__main__':
