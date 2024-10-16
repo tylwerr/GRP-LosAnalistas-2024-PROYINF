@@ -4,14 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/MPR/backend/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Ayuda</title>
 </head>
 <body id="body">
-    <div class="menuNav"></div>
-
-
+    <div class="menuNav"></div> 
+    <!-- FAQ -->
+    <div class="faq">
+        <h4>Preguntas Frecuentes (FAQ):</h4>
+        <div class="faq-item">
+            <div class="question">1. ¿Qué es un archivo DICOM?</div>
+            <div class="answer">Un archivo DICOM es un estándar de almacenamiento, manejo y transmisión de imágenes médicas y datos entre hardware de propósito médico.</div>
+        </div>
+        <div class="faq-item">
+            <div class="question">2. ¿Comó subir un archivo DICOM al visualizador?</div>
+            <div class="answer">Para subir un archivo DICOM diríjase a la sección del visualizador y utilice el botón de "Seleccionar Archivo" y escoja el archivo que desea subir, luego use el botón "Subir Archivo DICOM"</div>
+        </div>
+        <div class="faq-item">
+            <div class="question">3. ¿Qué formatos de archivo son compatibles?</div>
+            <div class="answer">Actualmente, solo se permiten archivos con la extensión ".dcm" (DICOM).</div>
+        </div>
+    </div>
+    <!-- Contacto -->
+    <div class="contact">
+        <h4>Contacto:</h4>
+        <p>Si tienes más preguntas, puedes enviarnos un correo a: 
+            <a href="mailto:"></a>
+        </p>
+    <div>
 </body>
     <script>
         $(document).ready(function () {

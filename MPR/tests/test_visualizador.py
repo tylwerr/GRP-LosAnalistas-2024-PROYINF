@@ -1,49 +1,70 @@
 import unittest
 import requests
 
+class TestRegla(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        #datos que se van a usar
+        cls.url = "http://127.0.0.1:5000/Visualizador"
+        cls.headers = {'User-Agent': 'unittest-script'} #identifica que es un script el que hace POST
 
+    @classmethod
+    def tearDownClass(cls):
+        #no requiere de limpieza ya que retorna mensajes
+        print("\nLimpieza después de todas las pruebas.")
+
+    def valid_distance(self):
+        return 400
+
+
+    def invalid_distance(self):
+        return 400
+
+        
 class TestUploadDICOM(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        #datos que se van a usar
+        cls.url = "http://127.0.0.1:5000/Visualizador"
+        cls.headers = {'User-Agent': 'unittest-script'} #identifica que es un script el que hace POST
+
+    @classmethod
+    def tearDownClass(cls):
+        #no requiere de limpieza ya que retorna mensajes
+        print("\nLimpieza después de todas las pruebas.")
+
 
     def test_subir_dicom_valido(self):
-        url = "http://127.0.0.1:5000/Visualizador"
         with open('../../DATOS_DICOM/Gd-MRA/IMG-0001-00001.dcm', 'rb') as f:
             files = {'file': f}  #Simulación de archivo DICOM válido
-            response = requests.post(url, files=files)
+            response = requests.post(self.url, files=files, headers=self.headers)
+
             try:
                 self.assertEqual(response.status_code, 200)
-                print("Test1 Goty")
-                #self.assertEqual(response.json().get("message"), "Imagen DICOM subida correctamente")
+                print("\nTest subir dicom valido: Aceptado.")
             except ValueError:
-                print("Respuesta del servidor:", response.text)  # Imprimir respuesta en caso de error
+                print("Respuesta del servidor:", response.text)
 
     def test_subir_dicom_no_valido(self):
-        url = "http://127.0.0.1:5000/Visualizador"
         with open('image.png', 'rb') as f:
             files = {'file': f}  #Simulación de archivo no válido
-            response = requests.post(url, files=files)
+            response = requests.post(self.url, files=files, headers=self.headers)
 
             try:
-                self.assertEqual(response.status_code, 200)
-                print("Test2 Goty")
-                #self.assertEqual(response.json().get("message"), "Tipo de archivo no válido")
+                self.assertEqual(response.status_code, 415)
+                print("\nTest subir archivo no válido: Aceptado.")
             except ValueError:
                 print("Response content:", response.content)
-            #self.assertEqual(response.status_code, 200)
-            #self.assertEqual(response.json().get("message"), "Tipo de archivo no válido")
 
     def test_subir_dicom_vacio(self):
-        url = "http://127.0.0.1:5000/Visualizador"
-        #files = {'file': ''}  #Simulación de archivo vacío
-        response = requests.post(url, files={})
+        files = {'file': ('', '')} #Simulación de archivo vacío
+        response = requests.post(self.url, files=files, headers=self.headers)
 
         try:
-            self.assertEqual(response.status_code, 200)
-            print("Test3 Goty")
-            #self.assertEqual(response.json().get("message"), "No se seleccionó ningún archivo")
+            self.assertEqual(response.status_code, 400)
+            print("\nTest subir archivo vacío: Aceptado.")
         except ValueError:
             print("Response content:", response.content) 
-        #self.assertEqual(response.status_code, 200)
-        #self.assertEqual(response.json().get("message"), "No se seleccionó ningún archivo")
 
     '''
     def test_measuredistance(self):

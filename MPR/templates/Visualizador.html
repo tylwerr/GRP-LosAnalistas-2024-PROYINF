@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/cornerstone-math"></script>
     <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
     <script src="https://unpkg.com/dicom-parser"></script>
+    <script src="https://unpkg.com/cornerstone-tools"></script>
     
     <title>Visualizador DICOM</title>
 
@@ -74,6 +75,7 @@
     {%if mensaje=='listoo'%}
     <div id="dicom-image" class="visualizador-container">
         <div id="dicom-viewer" style="width:512px; height:512px; background-color:black;"></div>
+        <button id="measure-btn">Activar Regla</button>
     </div>
     <script>
         var uploadFilename = "{{ archivo }}";

@@ -1,6 +1,10 @@
 #body{
     background-color: #F5F5F5;
 }
+.cornerstone-tools {
+    display: block; 
+    z-index: 10; 
+}
 .menu-bar {
     background-color: #333; 
     color: white; 
@@ -16,6 +20,7 @@
     align-items: center;
     color: white; 
 }
+
 .menu-bar ul {
     list-style-type: none; 
     margin: 0; 
@@ -91,4 +96,14 @@
 }
 .alert{
     margin-bottom: 15px;
+}
+.faq{
+    margin: 20px;
+}
+.faq .question{
+    font-weight: bold;
+    margin: 10px 0;
+}
+.faq .answer {
+    margin-left: 20px;
 }

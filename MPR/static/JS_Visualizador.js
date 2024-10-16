@@ -32,13 +32,25 @@ $(document).ready(function () {
 
     if(uploadFilename){
         cornerstone.loadImage('wadouri:' + imageUrl).then(function (image){
-            cornerstone.displayImage(dicomImageElement, image);    
+            cornerstone.displayImage(dicomImageElement, image); 
+            cornerstoneTools.init(); // inicializa las herramientas de cornerstone
+            cornerstoneTools.addTool(cornerstoneTools.LengthTool); // agregar la herramienta de medicion
         }).catch(function (error){
             console.error('Error al cargar la imagen: ', error);
         });
-
-        
     }
+
+    document.getElementById('measure-btn').addEventListener('click', function () {
+        const enabledElement = cornerstone.getEnabledElement(dicomImageElement);
+        if (enabledElement) {
+            cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1 }); // Activa la herramienta de medición
+            console.log('Herramienta de medición activada'); // Para verificar en la consola
+        } else {
+            console.error('El elemento DICOM no está habilitado.');
+        }
+    });
+
+
 
     let points = [];
     $('#ruler-toggle').on('click', function(e) {
