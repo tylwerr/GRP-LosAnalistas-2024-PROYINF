@@ -21,7 +21,12 @@ $(document).ready(function () {
 
     const dicomImageElement = document.getElementById('dicom-viewer');
     cornerstone.enable(dicomImageElement);
+
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+
+    cornerstoneTools.init({
+        showSVGCursors: true // Para mostrar cursores SVG en las herramientas
+    });
 
     //configuracion del cargador
     cornerstoneWADOImageLoader.configure({
@@ -42,11 +47,9 @@ $(document).ready(function () {
         // carga la imagen dicom
         cornerstone.loadImage('wadouri:' + imageUrl).then(function (image){
             cornerstone.displayImage(dicomImageElement, image); 
-            cornerstoneTools.init(); // inicializa las herramientas de cornerstone
 
-            cornerstoneTools.addTool(cornerstoneTools.LengthTool); // agregar la herramienta de medicion
-            cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1, options: toolOptions });
-
+        
+            console.log('Estoy aqui');
         }).catch(function (error){
             console.error('Error al cargar la imagen: ', error);
         });
@@ -55,6 +58,7 @@ $(document).ready(function () {
     document.getElementById('measure-btn').addEventListener('click', function () {
         cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1, options: toolOptions}); // Activa la herramienta de medición
         console.log('Herramienta de medición activada'); // Para verificar en la consola
+        cornerstone.updateImage(dicomImageElement);
     });
 
     const infoButton = document.getElementById('info-btn');
