@@ -49,6 +49,18 @@ $(document).ready(function () {
             console.error('El elemento DICOM no está habilitado.');
         }
     });
+    
+    const infoButton = document.getElementById('info-btn');
+    const dicomInfoCard = document.getElementById('dicom-info-card');
+
+    infoButton.addEventListener('mouseover', function() {
+        dicomInfoCard.style.display = 'block'; // Mostrar información
+    });
+
+    // Ocultar la información del DICOM cuando el mouse sale del botón
+    infoButton.addEventListener('mouseout', function() {
+        dicomInfoCard.style.display = 'none'; // Ocultar información
+    });
 
 
 

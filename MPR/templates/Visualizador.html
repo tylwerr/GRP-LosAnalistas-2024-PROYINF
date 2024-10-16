@@ -76,6 +76,21 @@
     <div id="dicom-image" class="visualizador-container">
         <div id="dicom-viewer" style="width:512px; height:512px; background-color:black;"></div>
         <button id="measure-btn">Activar Regla</button>
+        
+        <div class="info-button-container">
+            <button id="info-btn" class="btn btn-info">Mostrar Información del DICOM</button>
+        </div>
+
+        <div id="dicom-info-card" class="dicom-info-card" style="display:none;">
+            <h3>Información del DICOM</h3>
+            <p><strong>Nombre del Paciente:</strong> {{ dicom_info['PatientName'] }}</p>
+            <p><strong>ID del Paciente:</strong> {{ dicom_info['PatientID'] }}</p>
+            <p><strong>Fecha del Estudio:</strong> {{ dicom_info['StudyDate'] }}</p>
+            <p><strong>Modalidad:</strong> {{ dicom_info['Modality'] }}</p>
+            <p><strong>Institución:</strong> {{ dicom_info['InstitutionName'] }}</p>
+            <p><strong>Parte del Cuerpo:</strong> {{ dicom_info['BodyPartExamined'] }}</p>
+        </div>
+        
     </div>
     <script>
         var uploadFilename = "{{ archivo }}";

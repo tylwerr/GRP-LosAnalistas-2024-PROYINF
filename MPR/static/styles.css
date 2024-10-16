@@ -1,9 +1,36 @@
 #body{
     background-color: #F5F5F5;
 }
-.cornerstone-tools {
-    display: block; 
-    z-index: 10; 
+.info-button-container {
+    position: absolute;
+    top: 100px;
+    left: 10px;/* Asegura que esté por encima de otros elementos */
+}
+
+.dicom-info-card {
+    position: absolute;
+    top: 150px; /* Debajo del botón */
+    left: 10px; /* Alineado con el botón */
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo más oscuro y semitransparente */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 320px; /* Ampliar ligeramente */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    color: #ffffff; /* Color de texto blanco para mayor contraste */
+    font-size: 16px; /* Tamaño de fuente más grande */
+    line-height: 1.6; /* Mejora la separación entre líneas */
+    display: none; /* Inicialmente oculto */
+    z-index: 9999;
+}
+.dicom-info-card h3 {
+    font-size: 20px; /* Tamaño del título más grande */
+    margin-bottom: 10px;
+    color: #ffdd57; /* Título en color amarillo para destacar */
+}
+
+.dicom-info-card p {
+    margin: 5px 0; /* Espaciado entre los párrafos */
 }
 .menu-bar {
     background-color: #333; 
