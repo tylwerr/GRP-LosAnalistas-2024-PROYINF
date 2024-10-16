@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/cornerstone-math"></script>
     <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
     <script src="https://unpkg.com/dicom-parser"></script>
-    <script src="https://unpkg.com/cornerstone-tools"></script>
+    <script src="https://unpkg.com/cornerstone-tools@4.0.0"></script>
     
     <title>Visualizador DICOM</title>
 
@@ -41,7 +41,7 @@
     {%if mensaje=='falla1' or mensaje=='falla2' %}
     <div class="visualizador-container" id="Visualizador">
         <div class="alert alert-danger" role="alert">
-           No se ha subido un archivo.
+            No se ha subido un archivo.
         </div>
         <form action="{{url_for('visualizador')}}" method="POST" enctype="multipart/form-data">
             <p>
@@ -90,7 +90,7 @@
             <p><strong>Institución:</strong> {{ dicom_info['InstitutionName'] }}</p>
             <p><strong>Parte del Cuerpo:</strong> {{ dicom_info['BodyPartExamined'] }}</p>
         </div>
-        
+
     </div>
     <script>
         var uploadFilename = "{{ archivo }}";
