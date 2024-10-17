@@ -5,12 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="icon" href="{{ url_for('static', filename='Imagenes/logompr.jpg') }}" type="image/jpg">
+
+    <!-- incluir libreria hammer.js for touch gestures-->
+    <script src="https://unpkg.com/hammerjs@2.0.8/hammer.js"></script>
+    <script src="https://unpkg.com/dicom-parser@1.8.3/dist/dicomParser.min.js"></script>
+
+    <!-- incluir libreria cornerstone -->
     <script src="https://unpkg.com/cornerstone-core"></script>
     <script src="https://unpkg.com/cornerstone-math"></script>
     <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
-    <script src="https://unpkg.com/dicom-parser"></script>
-    <script src="https://unpkg.com/cornerstone-tools@4.0.0"></script>
+
+    <script src="https://unpkg.com/cornerstone-tools@%5E4"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <title>Visualizador DICOM</title>
 
@@ -74,7 +81,7 @@
     
     {%if mensaje=='listoo'%}
     <div id="dicom-image" class="visualizador-container">
-        <div id="dicom-viewer" style="width:512px; height:512px; background-color:black;"></div>
+        <div id="dicom-viewer" style="width:512px; height:512px; background-color:rgb(0, 0, 0); cursor: crosshair;border: 2px solid white;box-sizing: border-box;"></div>
         <button id="measure-btn">Activar Regla</button>
         
         <div class="info-button-container">
