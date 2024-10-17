@@ -28,8 +28,18 @@ $(document).ready(function () {
     const dicomImageElement = document.querySelector('#dicom-viewer');
     cornerstone.enable(dicomImageElement);
 
+    //herramienta distancia
     const LengthTool = cornerstoneTools.LengthTool;
     cornerstoneTools.addToolForElement(dicomImageElement,LengthTool);
+
+    //herramienta zoom
+    const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
+    cornerstoneTools.addToolForElement(dicomImageElement,ZoomMouseWheelTool);
+
+
+    let isLengthToolActive = false; 
+    let isZoomToolActive = false;
+
 
     // Configuración del cargador
     cornerstoneWADOImageLoader.configure({
@@ -59,8 +69,26 @@ $(document).ready(function () {
 
     document.getElementById('measure-btn').addEventListener('click', function () {
         // Activar la herramienta de medición para el elemento habilitado
-        cornerstoneTools.setToolActiveForElement(dicomImageElement,'Length', { mouseButtonMask: 1 });  // Corregido de 'Lenght' a 'Length'
-        console.log('Herramienta de medición activada'); // Verificar en la consola
+        if(isLengthToolActive){
+            cornerstoneTools.setToolDisabled('Length', { mouseButtonMask: 1 });
+            console.log('Herramienta de medición desactivada');
+        } else {
+            cornerstoneTools.setToolActiveForElement(dicomImageElement,'Length', { mouseButtonMask: 1 });  // Corregido de 'Lenght' a 'Length'
+            console.log('Herramienta de medición activada'); // Verificar en la consola
+        }
+        isLengthToolActive = !isLengthToolActive;
+    });
+
+    document.getElementById('zoom-btn').addEventListener('click', function () {
+        // Activar la herramienta de medición para el elemento habilitado
+        if(isZoomToolActive){
+            cornerstoneTools.setToolDisabled('ZoomMouseWheel', {mouseButtonMask: 1});
+            console.log('Herramienta de zoom desactivada');
+        } else {
+            cornerstoneTools.setToolActiveForElement(dicomImageElement,'ZoomMouseWheel', { mouseButtonMask: 1 });  // Corregido de 'Lenght' a 'Length'
+            console.log('Herramienta de zoom activada'); // Verificar en la consola
+        }
+        isZoomToolActive = !isZoomToolActive;
     });
 
     dicomImageElement.addEventListener(cornerstoneTools.EVENTS.MEASUREMENT_COMPLETED, function(event) {
