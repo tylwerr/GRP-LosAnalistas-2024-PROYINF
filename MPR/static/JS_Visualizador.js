@@ -52,50 +52,6 @@ $(document).ready(function () {
             cornerstone.displayImage(dicomImageElement, image); 
             dicomImageElement.style.cursor = 'crosshair';
 
-            // Variables para almacenar los dos clics
-            let firstClick = null;
-            let secondClick = null;
-
-            // Evento para manejar clics en la imagen DICOM
-            dicomImageElement.addEventListener('mousedown', function (e) {
-                const imageCoords = cornerstone.pageToPixel(dicomImageElement, e.pageX, e.pageY);
-
-                if (!firstClick) {
-                    // Guardar el primer clic
-                    firstClick = imageCoords;
-                    console.log(`Primer clic: x = ${firstClick.x}, y = ${firstClick.y}`);
-                } else {
-                    // Guardar el segundo clic y calcular la distancia
-                    secondClick = imageCoords;
-                    console.log(`Segundo clic: x = ${secondClick.x}, y = ${secondClick.y}`);
-
-                    const measurementData = {
-                        visible: true,
-                        active: true,
-                        handles: {
-                            start: { x: firstClick.x, y: firstClick.y, highlight: true, active: false },
-                            end: { x: secondClick.x, y: secondClick.y, highlight: true, active: true },
-                            textBox: {
-                                active: false,
-                                hasMoved: false,
-                                drawnIndependently: true,
-                                movesIndependently: false,
-                                x: (firstClick.x + secondClick.x) / 2,
-                                y: (firstClick.y + secondClick.y) / 2,
-                            },
-                        },
-                    };
-
-                    // Añadir el estado de la herramienta de medición
-                    cornerstoneTools.addToolState(dicomImageElement, 'Length', measurementData);
-                    cornerstone.updateImage(dicomImageElement);
-
-                    // Resetear clics
-                    firstClick = null;
-                    secondClick = null;
-                }
-            });
-
         }).catch(function (error) {
             console.error('Error al cargar la imagen: ', error);
         });
