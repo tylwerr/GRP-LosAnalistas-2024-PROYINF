@@ -1,18 +1,18 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from werkzeug.utils import secure_filename  #manejar archivos subidos
+from werkzeug.utils import secure_filename  # manejar archivos subidos
 from flask_cors import CORS
 import pydicom
 
 UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'dcm'}  #solo se permite dicom
+ALLOWED_EXTENSIONS = {'dcm'}  # solo se permite dicom
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 CORS(app)
 
-#verifica que el archivo sea de extensión dicom
+# verifica que el archivo sea de extensión dicom
 def archivo_permitido(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -37,75 +37,79 @@ def visualizador():
     user_agent = request.headers.get('User-Agent')
 
     if request.method == 'POST':
-        #verificar que el POST tenga parte file
-        if 'file' not in request.files:
-            if 'unittest-script' in user_agent:  #verifica si la solicitud es AJAX
+        if 'files' not in request.files:
+            if 'unittest-script' in user_agent:
                 return 'No se mandó un archivo', 400
             return render_template('Visualizador.html', mensaje='falla1')
 
-        file = request.files['file']
+        files = request.files.getlist('files')  # Obtener todos los archivos
 
-        #verificar que no esté vacío
-        if file.filename == '':
-            if 'unittest-script' in user_agent:  #verifica si la solicitud es AJAX
+        if not files:
+            if 'unittest-script' in user_agent:
                 return 'Se mandó un archivo vacío', 400
             return render_template('Visualizador.html', mensaje='falla2')
 
-        #archivo permitido
-        if file and archivo_permitido(file.filename):
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
+        dicom_info_list = []
+        dicom_urls = []
+        archivo = None
+        errors = []
 
-            try:
-                ds = pydicom.dcmread(filepath)
+        for file in files:
+            if file.filename == '':
+                errors.append('Archivo vacío detectado')
+                continue
 
-                dicom_info = {
-                    "PatientName": str(ds.PatientName),
-                    "PatientID": str(ds.PatientID),
-                    "StudyDate": str(ds.StudyDate),
-                    "Modality": str(ds.Modality),
-                    "InstitutionName": str(ds.get("InstitutionName", "N/A")),
-                    "BodyPartExamined": str(ds.get("BodyPartExamined", "N/A"))
-                }
+            if file and archivo_permitido(file.filename):
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(filepath)
+                archivo = filename  # Guardamos el nombre del archivo subido
 
-                year = dicom_info['StudyDate'][:4]
-                month = dicom_info['StudyDate'][4:6]
-                day = dicom_info['StudyDate'][6:8]
-                #cambio estructura de fecha
-                dicom_info['StudyDate'] = day + '/' + month + '/' + year
+                try:
+                    ds = pydicom.dcmread(filepath)
 
-                if 'anon' in dicom_info['PatientName']:
-                    dicom_info['PatientName'] = "Anónimo"
-                    
-                if 'anon' in dicom_info['PatientID']:
-                    dicom_info['PatientID'] = "Anónimo"
+                    dicom_info = {
+                        "PatientName": str(ds.PatientName),
+                        "PatientID": str(ds.PatientID),
+                        "StudyDate": str(ds.StudyDate),
+                        "Modality": str(ds.Modality),
+                        "InstitutionName": str(ds.get("InstitutionName", "N/A")),
+                        "BodyPartExamined": str(ds.get("BodyPartExamined", "N/A"))
+                    }
 
-                dicom_url = url_for('static', filename=f'uploads/{filename}')
+                    year = dicom_info['StudyDate'][:4]
+                    month = dicom_info['StudyDate'][4:6]
+                    day = dicom_info['StudyDate'][6:8]
+                    dicom_info['StudyDate'] = day + '/' + month + '/' + year
 
-                #verifica si la solicitud es AJAX
-                if 'unittest-script' in user_agent:
-                    return 'Archivo DICOM subido correctamente', 200
+                    if 'anon' in dicom_info['PatientName']:
+                        dicom_info['PatientName'] = "Anónimo"
 
-                return render_template(
-                    'Visualizador.html',
-                    mensaje='listoo',
-                    archivo=file.filename,
-                    dicom_url=dicom_url,
-                    dicom_info=dicom_info
-                )
+                    if 'anon' in dicom_info['PatientID']:
+                        dicom_info['PatientID'] = "Anónimo"
 
-            except Exception as e:
-                return render_template('Visualizador.html', mensaje='falla4', error=str(e))
+                    dicom_urls.append(url_for('static', filename=f'uploads/{filename}'))
+                    dicom_info_list.append(dicom_info)
 
-        else:
-            #no es tipo dicom
-            if 'unittest-script' in user_agent:  #verifica si la solicitud es AJAX
-                return 'Archivo subido no es tipo DICOM', 415
-            return render_template('Visualizador.html', mensaje='falla3')
+                except Exception as e:
+                    errors.append(f'Error al procesar {file.filename}: {str(e)}')
 
-    #página predeterminada
-    return render_template('Visualizador.html', mensaje='normal')
+            else:
+                errors.append(f'{file.filename} no es un archivo DICOM válido')
+
+        if errors:
+            return render_template('Visualizador.html', mensaje='Errores en la carga', errors=errors)
+
+        return render_template(
+            'Visualizador.html',
+            mensaje='listoo',
+            dicom_info=dicom_info_list,  # Se asume que sólo se muestra un archivo DICOM
+            archivo=archivo
+        )
+
+    # Si es un GET o no se suben archivos, aún renderizamos la plantilla
+    return render_template('Visualizador.html', mensaje='normal', dicom_info=None)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
