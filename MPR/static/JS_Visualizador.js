@@ -1,7 +1,7 @@
 import { Regla } from './Regla.js';
 import { Zoom } from './Zoom.js';
 import { Informacion } from './Mostrar_informacion.js';
-import { RenderingEngine } from '/static/node_modules/@cornerstonejs/core';  
+import { RenderingEngine } from '/static/node_modules/@cornerstonejs/streaming-image-volume-loader/dist/esm/index.js';  
 //import { volumeLoader } from './@cornerstonejs/streaming-image-volume-loader';
 
 
