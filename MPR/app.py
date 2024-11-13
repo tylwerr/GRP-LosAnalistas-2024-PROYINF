@@ -51,7 +51,7 @@ def visualizador():
 
         dicom_info_list = []
         dicom_urls = []
-        archivo = None
+        fileNames = []
         errors = []
 
         for file in files:
@@ -63,7 +63,6 @@ def visualizador():
                 filename = secure_filename(file.filename)
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(filepath)
-                archivo = filename  # Guardamos el nombre del archivo subido
 
                 try:
                     ds = pydicom.dcmread(filepath)
@@ -88,8 +87,9 @@ def visualizador():
                     if 'anon' in dicom_info['PatientID']:
                         dicom_info['PatientID'] = "Anónimo"
 
-                    dicom_urls.append(url_for('static', filename=f'uploads/{filename}'))
+                    dicom_urls.append(url_for('static', filename=f'uploads/{filename}')) #guardamos el path del archivo subido
                     dicom_info_list.append(dicom_info)
+                    fileNames.append(filename)
 
                 except Exception as e:
                     errors.append(f'Error al procesar {file.filename}: {str(e)}')
@@ -103,13 +103,25 @@ def visualizador():
         return render_template(
             'Visualizador.html',
             mensaje='listoo',
-            dicom_info=dicom_info_list,  # Se asume que sólo se muestra un archivo DICOM
-            archivo=archivo
+            dicom_info=dicom_info,
+            archivosID=fileNames
         )
 
     # Si es un GET o no se suben archivos, aún renderizamos la plantilla
     return render_template('Visualizador.html', mensaje='normal', dicom_info=None)
 
+# eliminar los archivos subidos de la carpeta uploads al momento que se cierre la pagina
+@app.route('/delete-uploads', methods=['POST'])
+def delete_uploads():
+    """Eliminar archivos en la carpeta de uploads."""
+    for filename in os.listdir(app.config['UPLOAD_FOLDER']):
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)  # Eliminar archivo
+        except Exception as e:
+            print(f"Error al eliminar {file_path}: {e}")
+    return '', 200
 
 if __name__ == '__main__':
     app.run(debug=True)

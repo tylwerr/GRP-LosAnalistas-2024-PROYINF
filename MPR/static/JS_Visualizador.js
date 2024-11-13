@@ -1,4 +1,15 @@
+import { Regla } from './Regla.js';
+import { Zoom } from './Zoom.js';
+import { Informacion } from './Mostrar_informacion.js';
+import { RenderingEngine } from '/static/node_modules/@cornerstonejs/core';  
+//import { volumeLoader } from './@cornerstonejs/streaming-image-volume-loader';
+
+
 $(document).ready(function () {
+    
+    
+    //<------- VINCULACIONES CON HTML ------->
+
     // Carga una barra de navegación dinámica desde otra ruta
     $('.menuNav').load('/navbar');
     $('.submenu').hide();  // Esconde los submenús inicialmente
@@ -22,9 +33,19 @@ $(document).ready(function () {
         }
     });
 
-    // Inicializa el entorno de Cornerstone para cargar imágenes DICOM
+    //<------- END VINCULACIONES CON HTML ------->
+
+    //<------- INICIALIZACIÓN DE CORNERSTONE ------->
+
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-    let currentImageIndex = 0;
+
+    //creacion imagenes IDs
+    const imageIds = []
+
+    for(let i = 0; i < fileNames.length; i++){
+        imageIds[i] = `wadouri:uploads/${fileNames[i]}`
+    };
+    
     // Inicializa herramientas de Cornerstone Tools
     cornerstoneTools.init({
         mouseEnabled: true,
@@ -35,28 +56,109 @@ $(document).ready(function () {
     const coronalViewElement = document.getElementById('coronal-view');
     const sagittalViewElement = document.getElementById('sagittal-view');
 
+    async function loadVolumen(imageIds){
+        
+        const renderingEngineId = 'myRenderingEngine';
+        const renderingEngine = new RenderingEngine(renderingEngineId);
+        const volumeId = 'cornerstoneStreamingImageVolume: myVolume';
+        
+        try {
+            const volume = await volumeLoader.createAndCacheVolume(volumeId, { imageIds });
+            console.log('Volumen cargado exitosamente');
+        } catch (error) {
+            console.error('Error al cargar el volumen:', error);s
+        }
+
+        const viewportId1 = 'CT_AXIAL';
+        const viewportId2 = 'CT_SAGITTAL';
+        const viewportId3 = 'CT_CORONAL';
+        
+        const viewportInput = [
+        {
+            viewportId: viewportId1,
+            element: axialViewElement,
+            type: ViewportType.ORTHOGRAPHIC,
+            defaultOptions: {
+            orientation: Enums.OrientationAxis.AXIAL,
+            },
+        },
+        {
+            viewportId: viewportId2,
+            element: sagittalViewElement,
+            type: ViewportType.ORTHOGRAPHIC,
+            defaultOptions: {
+            orientation: Enums.OrientationAxis.SAGITTAL,
+            },
+        },
+        {
+            viewportId: viewportId3,
+            element: coronalViewElement,
+            type: ViewportType.ORTHOGRAPHIC,
+            defaultOptions: {
+            orientation: Enums.OrientationAxis.CORONAL,
+            },
+        },
+        ];
+        
+        renderingEngine.setViewports(viewportInput);
+        
+        volume.load();
+        
+        setVolumesForViewports(
+        renderingEngine,
+        [{ volumeId }],
+        [viewportId1, viewportId2, viewportId3]
+        );
+        
+        renderingEngine.renderViewports([viewportId1, viewportId2, viewportId3]);
+    }
+
+    /*
     cornerstone.enable(axialViewElement);
     cornerstone.enable(coronalViewElement);
     cornerstone.enable(sagittalViewElement);
-
-    let imagenesIds = []
-    
-    
-    // Agrega la herramienta de medición de longitud
-    /*
-    const LengthTool = cornerstoneTools.LengthTool;
-    cornerstoneTools.addToolForElement(dicomImageElement, LengthTool);
-
-    // Agrega la herramienta de zoom
-    const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
-    cornerstoneTools.addToolForElement(dicomImageElement, ZoomMouseWheelTool);
-
-    // Estado para las herramientas de medición y zoom
-    let isLengthToolActive = false; 
-    let isZoomToolActive = false;
     */
-    // Configura Cornerstone para cargar imágenes antes de mostrarlas
 
+    //cornerstoneTools.addTool(cornerstoneTools.CrosshairsTool);
+
+
+    //<------- END INICIALIZACIÓN DE CORNERSTONE ------->
+
+    //<------- CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
+
+    // Inicializar la primera imagen
+    //loadImageForAllViews(currentImageIndex);
+    loadVolumen(imageIds);
+
+    /*
+    let currentImageIndex = 0;
+
+    function loadImageForAllViews(imageIndex) {
+        // Cargar y mostrar la imagen para cada vista
+        cornerstone.loadAndCacheImage(imagenesIds[imageIndex]).then(image => {
+            cornerstone.displayImage(axialElement, image);
+            cornerstone.displayImage(sagittalElement, image);
+            cornerstone.displayImage(coronalElement, image);
+        });
+    }
+
+    function scrollSynchronize(event) {
+        const delta = event.detail.direction; // Obtener la dirección del scroll
+        currentImageIndex += delta;
+
+        // Restringir el índice de imagen a los límites de la serie DICOM
+        if (currentImageIndex < 0) {
+            currentImageIndex = 0;
+        } else if (currentImageIndex >= imagenesIds.length) {
+            currentImageIndex = imagenesIds.length - 1;
+        }
+
+        // Actualizar todas las vistas con la nueva imagen
+        loadImageForAllViews(currentImageIndex);
+    }
+
+
+    // Configura Cornerstone para cargar imágenes antes de mostrarlas
     cornerstoneWADOImageLoader.configure({
         beforeLoad: function(imageId) {
             return new Promise((resolve, reject) => {
@@ -65,70 +167,72 @@ $(document).ready(function () {
         }
     });
 
-    // Opciones de estilo para las herramientas de Cornerstone
-    const toolOptions = {
-        activeColor: 'yellow',  // Color para las herramientas activas
-        shadow: true,  // Añade sombra para mejor visibilidad
-        lineWidth: 2,  // Grosor de la línea
-    };
-
     // Si existe un archivo cargado, se carga la imagen DICOM
-    if (uploadFilename) {
+    if (uploadFilesName) {
         const imageId = 'wadouri:' + imageUrl;
 
         // Cargar la imagen DICOM para cada vista
         cornerstone.loadImage(imageId).then(function(image) {
             // Muestra la imagen en las tres vistas con orientación correspondiente
-            cornerstone.displayImage(axialViewElement, image);   // Axial
-            cornerstone.displayImage(coronalViewElement, image); // Coronal
-            cornerstone.displayImage(sagittalViewElement, image);// Sagital
+            cornerstone.displayImage(axialViewElement, image);
+            cornerstone.displayImage(coronalViewElement, image);
+            cornerstone.displayImage(sagittalViewElement, image);
         }).catch(function(error) {
             console.error('Error al cargar la imagen:', error);
         });
     }
+    */
+
+    //<------- END CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
+    
+    //<------- FUNCIONALIDADES ------->
+
+    // Agrega la herramienta de medición de longitud
+    const LengthTool = cornerstoneTools.LengthTool;
+    //cornerstoneTools.addToolForElement(dicomImageElement, LengthTool);
+
+    // Agrega la herramienta de zoom
+    const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
+    //cornerstoneTools.addToolForElement(dicomImageElement, ZoomMouseWheelTool);
+
+    // Habilitar el scroll tool para sincronizar en todas las vistas
+    //cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
+
+    // Estado para las herramientas de medición y zoom
+    let isLengthToolActive = false; 
+    let isZoomToolActive = false;
+
+    // Opciones de estilo para las herramientas de Cornerstone
+    const toolOptions = {
+        activeColor: 'yellow',  // Color para las herramientas activas
+        shadow: true,          // Añade sombra para mejor visibilidad
+        lineWidth: 2,         // Grosor de la línea
+    };
 
     /*
-    // Botón para activar/desactivar la herramienta de medición
-    document.getElementById('measure-btn').addEventListener('click', function () {
-        if (isLengthToolActive) {
-            cornerstoneTools.setToolDisabled('Length', { mouseButtonMask: 1 });
-            console.log('Herramienta de medición desactivada');
-        } else {
-            cornerstoneTools.setToolActiveForElement(dicomImageElement, 'Length', { mouseButtonMask: 1 });
-            console.log('Herramienta de medición activada');
-        }
-        isLengthToolActive = !isLengthToolActive;
-    });
+    cornerstoneTools.setToolActive('StackScrollMouseWheel', { mouseButtonMask: 1 });
+    // Escuchar los eventos de scroll en una de las vistas (puede ser axialElement)
+    axialElement.addEventListener('cornerstonetoolsmousewheel', scrollSynchronize);
+    sagittalElement.addEventListener('cornerstonetoolsmousewheel', scrollSynchronize);
+    coronalElement.addEventListener('cornerstonetoolsmousewheel', scrollSynchronize);
+    */
 
-    // Botón para activar/desactivar la herramienta de zoom
-    document.getElementById('zoom-btn').addEventListener('click', function () {
-        if (isZoomToolActive) {
-            cornerstoneTools.setToolDisabled('ZoomMouseWheel', {mouseButtonMask: 1});
-            console.log('Herramienta de zoom desactivada');
-        } else {
-            cornerstoneTools.setToolActiveForElement(dicomImageElement, 'ZoomMouseWheel', { mouseButtonMask: 1 });
-            console.log('Herramienta de zoom activada');
-        }
-        isZoomToolActive = !isZoomToolActive;
-    });
+    //Botón de Regla
+    //Regla(isLengthToolActive, dicomImageElement);
 
+    //Botón de Zoom
+    //Zoom(isZoomToolActive, dicomImageElement);
+
+    //Mostrar información
+    Informacion();
+
+    /*
     // Evento cuando se completa una medición
     dicomImageElement.addEventListener(cornerstoneTools.EVENTS.MEASUREMENT_COMPLETED, function(event) {
         const measurementData = event.detail.measurementData;
         console.log(`Medición completada: ${measurementData.length.toFixed(2)} mm`);
     });
-
-    // Mostrar información del DICOM al pasar el mouse sobre el botón de información
-    const infoButton = document.getElementById('info-btn');
-    const dicomInfoCard = document.getElementById('dicom-info-card');
-
-    infoButton.addEventListener('mouseover', function() {
-        dicomInfoCard.style.display = 'block';  // Mostrar tarjeta de información
-    });
-
-    // Ocultar la tarjeta de información cuando se deja de pasar el mouse
-    infoButton.addEventListener('mouseout', function() {
-        dicomInfoCard.style.display = 'none';  // Ocultar tarjeta de información
-    });
     */
+    
+    //<------- END FUNCIONALIDADES ------->
 });

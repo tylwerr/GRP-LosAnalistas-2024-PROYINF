@@ -137,3 +137,6 @@
 .contact{
     margin: 20px;
 }
+#axial-view, #coronal-view, #sagittal-view {
+    cursor: crosshair;  /* Cambia el cursor a cruz */
+}

@@ -123,10 +123,16 @@
 
     </div>
     <script>
-        var uploadFilename = "{{ archivo }}";
-        const imageUrl = "{{ url_for('static', filename='uploads/') }}" + uploadFilename; 
+        const fileNames = "{{ archivosID }}";
+        window.addEventListener("beforeunload", function(){
+            navigator.sendBeacon("/delete-uploads");
+        });
+        
+        
     </script>
-    <script src="{{ url_for('static', filename='JS_Visualizador.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='Mostrar_informacion.js') }}"></script>
+
+    <script type="module" src="{{ url_for('static', filename='JS_Visualizador.js') }}"></script>
     {% endif %}
     
 </body>
