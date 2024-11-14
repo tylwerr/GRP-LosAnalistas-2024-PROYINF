@@ -1,7 +1,8 @@
+
 import { Regla } from './Regla.js';
 import { Zoom } from './Zoom.js';
 import { Informacion } from './Mostrar_informacion.js';
-import { RenderingEngine } from '/static/node_modules/@cornerstonejs/streaming-image-volume-loader/dist/esm/index.js';  
+//import { RenderingEngine } from '/static/node_modules/@cornerstonejs/streaming-image-volume-loader/dist/esm/index.js';  
 //import { volumeLoader } from './@cornerstonejs/streaming-image-volume-loader';
 
 
@@ -38,110 +39,64 @@ $(document).ready(function () {
     //<------- INICIALIZACIÓN DE CORNERSTONE ------->
 
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-
-    //creacion imagenes IDs
-    const imageIds = []
-
-    for(let i = 0; i < fileNames.length; i++){
-        imageIds[i] = `wadouri:uploads/${fileNames[i]}`
-    };
-    
-    // Inicializa herramientas de Cornerstone Tools
-    cornerstoneTools.init({
-        mouseEnabled: true,
-        showSVGCursors: true,  // Muestra cursores SVG
+    cornerstoneWADOImageLoader.configure({
+        useWebWorkers: true,
     });
-
+    
+    
     const axialViewElement = document.getElementById('axial-view');
     const coronalViewElement = document.getElementById('coronal-view');
     const sagittalViewElement = document.getElementById('sagittal-view');
 
-    async function loadVolumen(imageIds){
-        
-        const renderingEngineId = 'myRenderingEngine';
-        const renderingEngine = new RenderingEngine(renderingEngineId);
-        const volumeId = 'cornerstoneStreamingImageVolume: myVolume';
-        
-        try {
-            const volume = await volumeLoader.createAndCacheVolume(volumeId, { imageIds });
-            console.log('Volumen cargado exitosamente');
-        } catch (error) {
-            console.error('Error al cargar el volumen:', error);s
-        }
-
-        const viewportId1 = 'CT_AXIAL';
-        const viewportId2 = 'CT_SAGITTAL';
-        const viewportId3 = 'CT_CORONAL';
-        
-        const viewportInput = [
-        {
-            viewportId: viewportId1,
-            element: axialViewElement,
-            type: ViewportType.ORTHOGRAPHIC,
-            defaultOptions: {
-            orientation: Enums.OrientationAxis.AXIAL,
-            },
-        },
-        {
-            viewportId: viewportId2,
-            element: sagittalViewElement,
-            type: ViewportType.ORTHOGRAPHIC,
-            defaultOptions: {
-            orientation: Enums.OrientationAxis.SAGITTAL,
-            },
-        },
-        {
-            viewportId: viewportId3,
-            element: coronalViewElement,
-            type: ViewportType.ORTHOGRAPHIC,
-            defaultOptions: {
-            orientation: Enums.OrientationAxis.CORONAL,
-            },
-        },
-        ];
-        
-        renderingEngine.setViewports(viewportInput);
-        
-        volume.load();
-        
-        setVolumesForViewports(
-        renderingEngine,
-        [{ volumeId }],
-        [viewportId1, viewportId2, viewportId3]
-        );
-        
-        renderingEngine.renderViewports([viewportId1, viewportId2, viewportId3]);
-    }
-
-    /*
+    // Habilitar elementos de Cornerstone
+    
     cornerstone.enable(axialViewElement);
     cornerstone.enable(coronalViewElement);
     cornerstone.enable(sagittalViewElement);
-    */
+
+    // Creacion imagenes IDs
+    
+    
+    
+    const imageIds = []
+
+    for(let i = 0; i < fileNames.length; i++){
+        imageIds[i] = `wadouri:/static/uploads/${fileNames[i]}`;
+
+    };
+    console.log(imageIds)
+    
+    // Inicializa herramientas de Cornerstone Tools
+    /*
+    cornerstoneTools.init({
+        mouseEnabled: true,
+        showSVGCursors: true,  // Muestra cursores SVG
+    });*/
+
+    
+
 
     //cornerstoneTools.addTool(cornerstoneTools.CrosshairsTool);
-
 
     //<------- END INICIALIZACIÓN DE CORNERSTONE ------->
 
     //<------- CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
 
+    let currentImageIndex = 0;
+    function loadImageForAllViews(imageIndex){
+        // Cargar y mostrar la imagen para cada vista
+        cornerstone.loadAndCacheImage(imageIds[imageIndex]).then(function(image) {
+            cornerstone.displayImage(axialViewElement, image);
+            cornerstone.displayImage(coronalViewElement, image);
+            cornerstone.displayImage(sagittalViewElement, image);
+        }).catch(err => console.error('Error al cargar imagen:', err));
+    }
+    
     // Inicializar la primera imagen
-    //loadImageForAllViews(currentImageIndex);
-    loadVolumen(imageIds);
+    loadImageForAllViews(currentImageIndex);
+
 
     /*
-    let currentImageIndex = 0;
-
-    function loadImageForAllViews(imageIndex) {
-        // Cargar y mostrar la imagen para cada vista
-        cornerstone.loadAndCacheImage(imagenesIds[imageIndex]).then(image => {
-            cornerstone.displayImage(axialElement, image);
-            cornerstone.displayImage(sagittalElement, image);
-            cornerstone.displayImage(coronalElement, image);
-        });
-    }
-
     function scrollSynchronize(event) {
         const delta = event.detail.direction; // Obtener la dirección del scroll
         currentImageIndex += delta;

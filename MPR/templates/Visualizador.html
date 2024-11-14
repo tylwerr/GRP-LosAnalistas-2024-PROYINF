@@ -18,6 +18,9 @@
 
     <script src="https://unpkg.com/cornerstone-tools@%5E4"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@kitware/vtk.js"></script>
+
+    <script src="https://unpkg.com/cornerstone-streaming-image-volume-loader"></script>
     <style>
         #axial-view, #coronal-view, #sagittal-view {
             width: 300px;
@@ -123,12 +126,11 @@
 
     </div>
     <script>
-        const fileNames = "{{ archivosID }}";
+        const fileNames = {{ archivosID | tojson | safe }}; // ¡¡¡¡ NO TOCAR !!!!!
+        
         window.addEventListener("beforeunload", function(){
             navigator.sendBeacon("/delete-uploads");
         });
-        
-        
     </script>
     <script type="module" src="{{ url_for('static', filename='Mostrar_informacion.js') }}"></script>
 

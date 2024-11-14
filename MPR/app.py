@@ -64,6 +64,9 @@ def visualizador():
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(filepath)
 
+                print(f"Archivo guardado con el nombre: {filename}")
+                print(f"Ruta completa del archivo: {filepath}")
+
                 try:
                     ds = pydicom.dcmread(filepath)
 
