@@ -39,6 +39,7 @@ $(document).ready(function () {
     //<------- INICIALIZACIÓN DE CORNERSTONE ------->
 
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.webWorkerManager.initialize();
     cornerstoneWADOImageLoader.configure({
         useWebWorkers: true,
     });
