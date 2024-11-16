@@ -101,7 +101,7 @@ def visualizador():
                 errors.append(f'{file.filename} no es un archivo DICOM válido')
 
         if errors:
-            return render_template('Visualizador.html', mensaje='Errores en la carga', errors=errors)
+            return render_template('Visualizador.html', mensaje='falla3', errors=errors)
 
         return render_template(
             'Visualizador.html',
