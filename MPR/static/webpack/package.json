@@ -25,6 +25,12 @@
     "@cornerstonejs/dicom-image-loader": "^2.2.4",
     "@cornerstonejs/streaming-image-volume-loader": "^1.86.0",
     "@cornerstonejs/tools": "^2.2.4",
-    "cornerstone-wado-image-loader": "^4.13.2"
+    "browserify-fs": "^1.0.0",
+    "buffer": "^6.0.3",
+    "cornerstone-wado-image-loader": "^4.13.2",
+    "dicom-parser": "^1.8.21",
+    "path-browserify": "^1.0.1",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5"
   }
 }

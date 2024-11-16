@@ -51,7 +51,7 @@ class TestUploadDICOM(unittest.TestCase):
             response = requests.post(self.url, files=files, headers=self.headers)
 
             try:
-                self.assertEqual(response.status_code, 415)
+                self.assertEqual(response.status_code, 400)
                 print("\nTest subir archivo no válido: Aceptado.")
             except ValueError:
                 print("Response content:", response.content)

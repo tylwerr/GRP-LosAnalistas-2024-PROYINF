@@ -39,6 +39,7 @@ $(document).ready(function () {
     //<------- INICIALIZACIÓN DE CORNERSTONE ------->
 
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
     cornerstoneWADOImageLoader.webWorkerManager.initialize();
     cornerstoneWADOImageLoader.configure({
         useWebWorkers: true,
@@ -56,8 +57,6 @@ $(document).ready(function () {
     cornerstone.enable(sagittalViewElement);
 
     // Creacion imagenes IDs
-    
-    
     
     const imageIds = []
 
@@ -180,7 +179,7 @@ $(document).ready(function () {
     //Zoom(isZoomToolActive, dicomImageElement);
 
     //Mostrar información
-    Informacion();
+    //Informacion();
 
     /*
     // Evento cuando se completa una medición

@@ -1,7 +1,8 @@
-import { RenderingEngine, Enums, volumeLoader, cornerstoneStreamingImageVolumeLoader, setVolumesForViewports, init } from '@cornerstonejs/core';
-import { Informacion } from '../../Mostrar_informacion.js';
-import cornerstone from 'cornerstone-core';
-import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
+import * as cornerstoneCore from '@cornerstonejs/core';
+import * as dicomImageLoader from '@cornerstonejs/dicom-image-loader';
+import { dicomParser } from 'dicom-parser';
+import { Informacion } from './Mostrar_informacion.js';
+import { Regla } from './Regla.js';
 
 
 $(document).ready(async function () {
@@ -34,60 +35,67 @@ $(document).ready(async function () {
 //<------- END VINCULACIONES CON HTML ------->
 
 //<------- INICIALIZACIÓN DE CORNERSTONE ------->
-    init();
+
+    await cornerstoneCore.init();
+    await dicomImageLoader.init();
+    
+
+    const { ViewportType } = cornerstoneCore.Enums;
 
     const axialViewElement = document.getElementById('axial-view');
     const coronalViewElement = document.getElementById('coronal-view');
     const sagittalViewElement = document.getElementById('sagittal-view');
-
+    
     // Creacion imagenes IDs
-    const imageIds = fileNames.map(fileName=>"wadouri:/static/uploads/"+fileName)//Recorre para crear el path
+    const imageIds = fileNames.map(fileName=>"wadouri:http://localhost:5000/static/uploads/"+fileName);
+    
 
     const renderingEngineId = 'myRenderingEngine';
-    const renderingEngine = new RenderingEngine(renderingEngineId);
+    const renderingEngine = new cornerstoneCore.RenderingEngine(renderingEngineId);
 
-    const volumeId = 'cornerstoneStreamingImageVolume:myVolumeId';
-    console.log("carlos")
+    const volumeId = 'cornerstoneStreamingImageVolume:CT_VOLUME_ID';
     
-    const volume = await volumeLoader.createAndCacheVolume(volumeId, { imageIds: imageIds });//AQUI EL ERRRROOOOOOOOOOR
+    const volume = await cornerstoneCore.volumeLoader.createAndCacheVolume(volumeId, {imageIds});
 
-    console.log("Arévalo")
     const viewportId1 = 'CT_AXIAL';
     const viewportId2 = 'CT_SAGITTAL';
     const viewportId3 = 'CT_CORONAL';
-    console.log("chavela")
+
     const viewportInput = [
     {
         viewportId: viewportId1,
         element: axialViewElement,
-        type: Enums.ViewportType.ORTHOGRAPHIC,
+        type: ViewportType.ORTHOGRAPHIC,
         defaultOptions: {
-            orientation: Enums.OrientationAxis.AXIAL,
+            orientation: cornerstoneCore.Enums.OrientationAxis.AXIAL,
+            
         },
     },
     {
         viewportId: viewportId2,
         element: sagittalViewElement,
-        type: Enums.ViewportType.ORTHOGRAPHIC,
+        type: ViewportType.ORTHOGRAPHIC,
         defaultOptions: {
-            orientation: Enums.OrientationAxis.SAGITTAL,
+            orientation: cornerstoneCore.Enums.OrientationAxis.SAGITTAL,
+
         },
     },
     {
         viewportId: viewportId3,
         element: coronalViewElement,
-        type: Enums.ViewportType.ORTHOGRAPHIC,
+        type: ViewportType.ORTHOGRAPHIC,
         defaultOptions: {
-            orientation: Enums.OrientationAxis.CORONAL,
+            orientation: cornerstoneCore.Enums.OrientationAxis.CORONAL,
+            
         },
     },
     ];
-    console.log("hola")
+    
     renderingEngine.setViewports(viewportInput);
 
     volume.load();
 
-    setVolumesForViewports(
+    cornerstoneCore.setVolumesForViewports(
     renderingEngine,
     [{ volumeId }],
     [viewportId1, viewportId2, viewportId3]
@@ -95,21 +103,66 @@ $(document).ready(async function () {
 
     // Render the image
     renderingEngine.renderViewports([viewportId1, viewportId2, viewportId3]);
+    
+    
 
 
+    
 
 //<------- END INICIALIZACIÓN DE CORNERSTONE ------->
 
 //<------- CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
 
-
+    
 
 //<------- END CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
     
 //<------- FUNCIONALIDADES ------->
+    // Agrega la herramienta de medición de longitud
+    //const LengthTool = cornerstoneTools.LengthTool;
+    //cornerstoneTools.addToolForElement(dicomImageElement, LengthTool);
+
+    // Agrega la herramienta de zoom
+    //const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
+    //cornerstoneTools.addToolForElement(dicomImageElement, ZoomMouseWheelTool);
+
+    // Habilitar el scroll tool para sincronizar en todas las vistas
+    //cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
+
+    // Estado para las herramientas de medición y zoom
+    let isLengthToolActive = false; 
+    let isZoomToolActive = false;
+
+    // Opciones de estilo para las herramientas de Cornerstone
+    const toolOptions = {
+        activeColor: 'yellow',  // Color para las herramientas activas
+        shadow: true,          // Añade sombra para mejor visibilidad
+        lineWidth: 2,         // Grosor de la línea
+    };
+    /*
+    cornerstoneTools.setToolActive('StackScrollMouseWheel', { mouseButtonMask: 1 });
+    // Escuchar los eventos de scroll en una de las vistas (puede ser axialElement)
+    axialElement.addEventListener('cornerstonetoolsmousewheel', scrollSynchronize);
+    sagittalElement.addEventListener('cornerstonetoolsmousewheel', scrollSynchronize);
+    coronalElement.addEventListener('cornerstonetoolsmousewheel', scrollSynchronize);
+    */
+
+    //Botón de Regla
+    //Regla(isLengthToolActive, dicomImageElement);
+
+    //Botón de Zoom
+    //Zoom(isZoomToolActive, dicomImageElement);
 
     //Mostrar información
     Informacion();
+
+     /*
+    // Evento cuando se completa una medición
+    dicomImageElement.addEventListener(cornerstoneTools.EVENTS.MEASUREMENT_COMPLETED, function(event) {
+        const measurementData = event.detail.measurementData;
+        console.log(`Medición completada: ${measurementData.length.toFixed(2)} mm`);
+    });
+    */
     
 //<------- END FUNCIONALIDADES ------->
 });
