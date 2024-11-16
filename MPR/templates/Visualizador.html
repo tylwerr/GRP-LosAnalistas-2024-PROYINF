@@ -22,9 +22,14 @@
     
     <style>
         #axial-view, #coronal-view, #sagittal-view {
-            width: 300px;
-            height: 300px;
-            border: 1px solid black;
+            width: 100%; /* Ocupa todo el ancho */
+            height: 100%; /* Ocupa toda la altura */
+            max-width: 500px; /* Restricción opcional */
+            max-height: 500px; /* Restricción opcional */
+            background-color: black; /* Fondo negro para mayor contraste */
+            border: 2px solid white;
+            position: relative;
+            overflow: hidden; 
         }
     </style>
     <title>Visualizador DICOM</title>
