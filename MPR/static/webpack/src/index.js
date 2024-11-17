@@ -1,9 +1,10 @@
 import * as cornerstoneCore from '@cornerstonejs/core';
-import { LengthTool } from '@cornerstonejs/tools';
 import * as dicomImageLoader from '@cornerstonejs/dicom-image-loader';
+import * as cornerstoneTools from '@cornerstonejs/tools'; // Para tools.js
 import { Informacion } from './Mostrar_informacion.js';
 import { Regla } from './Regla.js';
-import * as cornerstoneTools from '@cornerstonejs/tools'; // Para tools.js
+import { Zoom } from './Zoom.js';
+
 
 $(document).ready(async function () {
     
@@ -37,6 +38,7 @@ $(document).ready(async function () {
 //<------- INICIALIZACIÓN DE CORNERSTONE ------->
     await cornerstoneCore.init();
     await dicomImageLoader.init();
+    await cornerstoneTools.init();
     
     const { ToolGroupManager, Enums, CrosshairsTool, synchronizers, } = cornerstoneTools;
     
@@ -52,12 +54,14 @@ $(document).ready(async function () {
     const viewportId3 = 'CT_CORONAL';
 
     const toolGroupId = 'MY_TOOLGROUP_ID';
+    const toolGroup = cornerstoneTools.ToolGroupManager.createToolGroup(toolGroupId);
+
     const synchronizerId = 'SLAB_THICKNESS_SYNCHRONIZER_ID';
     
     // Creacion imagenes IDs
     const imageIds = fileNames.map(fileName=>"wadouri:http://localhost:5000/static/uploads/"+fileName);
     
-
+    
     const renderingEngineId = 'myRenderingEngine';
     const renderingEngine = new cornerstoneCore.RenderingEngine(renderingEngineId);
 
@@ -111,27 +115,18 @@ $(document).ready(async function () {
 //<------- END INICIALIZACIÓN DE CORNERSTONE ------->
 
 //<------- CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
+/*
     const LengthTool = cornerstoneTools.LengthTool;
     cornerstoneTools.addTool(cornerstoneTools.LengthTool);
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
     let isLengthToolActive = false;
     Regla(isLengthToolActive, [axialViewElement, coronalViewElement, sagittalViewElement]);
+*/
 
 //<------- END CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
     
 //<------- FUNCIONALIDADES ------->
-    // Agrega la herramienta de medición de longitud
-    //const LengthTool = cornerstoneTools.LengthTool;
-    //cornerstoneTools.addToolForElement(dicomImageElement, LengthTool);
-    
-    // Agrega la herramienta de zoom
-    //const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
-    //cornerstoneTools.addToolForElement(dicomImageElement, ZoomMouseWheelTool);
-
-    // Habilitar el scroll tool para sincronizar en todas las vistas
-    //cornerstoneTools.addTool(cornerstoneTools.StackScrollMouseWheelTool);
-
     
     let isZoomToolActive = false;
 
@@ -143,6 +138,7 @@ $(document).ready(async function () {
         lineWidth: 2,         // Grosor de la línea
     };
 
+    /*
     const viewportReferenceLineControllable = [
         viewportId1,
         viewportId2,
@@ -179,11 +175,13 @@ $(document).ready(async function () {
         const index = viewportReferenceLineSlabThicknessControlsOn.indexOf(viewportId);
         return index !== -1;
     }
-    
-    cornerstoneTools.addTool(CrosshairsTool);
+    */
 
-    const toolGroup = ToolGroupManager.createToolGroup(toolGroupId);
-    addManipulationBindings(toolGroup);
+    //cornerstoneTools.addTool(CrosshairsTool);
+    cornerstoneTools.addTool(ZoomTool);
+    //toolGroup.addTool(CrosshairsTool.toolName);
+    toolGroup.addTool(ZoomTool.toolName);
+    //addManipulationBindings(toolGroup);
 
     toolGroup.addViewport(viewportId1, renderingEngineId);
     toolGroup.addViewport(viewportId2, renderingEngineId);
@@ -193,8 +191,8 @@ $(document).ready(async function () {
     //Regla(isLengthToolActive, dicomImageElement);
 
     //Botón de Zoom
-    //Zoom(isZoomToolActive, dicomImageElement);
-
+    Zoom(isZoomToolActive, toolGroup);
+    
     //Mostrar información
     Informacion();
 
