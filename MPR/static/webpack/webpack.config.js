@@ -9,22 +9,35 @@ module.exports = {
         app: './src/index.js'
     },
 
+    experiments: { 
+        asyncWebAssembly: true
+    },
+
     module: {
         rules:[
             {
-                test: /\.js/,
+                test: /\.js$/,
                 exclude: /node_modules/,
                 use: ["babel-loader"],
-            }
-        ]
+            },
+            {
+                test: /\.wasm$/,
+                type: 'webassembly/async',
+            },
+        ],
     },
 
     output: {
         path: path.join(basePath, distPath),
         filename: 'bundle.js'
     },
+    
 
     resolve: {
+        alias: {
+            "@cornerstonejs/tools": "@cornerstonejs/tools/dist/umd/index.js"
+        },
+
         fallback: {
             fs: require.resolve('browserify-fs'),
             path: require.resolve('path-browserify'),
