@@ -22,7 +22,8 @@ Issue 2:
 
 ### Resultados Re-inspección de SonarQube
 
-Se solucionaron las issues 1 y 2. Las suguerencias restantes no las tomaremos en cuenta debido a los siguientes puntos:
+Se solucionaron las issues 1 y 2, las soluciones para ambas issues se implementaron en app.py (los cambios ya estan subidos).
+Las suguerencias restantes no las tomaremos en cuenta debido a los siguientes puntos:
 
 - SonarQube está incluyendo el archivo JS_visualizador, el cual ya no utilizamos en el proyecto.
 
