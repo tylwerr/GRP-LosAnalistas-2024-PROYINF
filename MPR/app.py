@@ -6,6 +6,7 @@ import pydicom
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'dcm'}  # solo se permite dicom
+TEMPLATE = 'Visualizador.html'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -40,18 +41,18 @@ def visualizador():
         if 'files' not in request.files:
             if 'unittest-script' in user_agent:
                 return 'No se mandó un archivo', 400
-            return render_template('Visualizador.html', mensaje='falla1')
+            return render_template(TEMPLATE, mensaje='falla1')
 
         files = request.files.getlist('files')  # Obtener todos los archivos
 
         if not files:
             if 'unittest-script' in user_agent:
                 return 'Se mandó un archivo vacío', 400
-            return render_template('Visualizador.html', mensaje='falla2')
+            return render_template(TEMPLATE, mensaje='falla2')
 
         dicom_info_list = []
         dicom_urls = []
-        fileNames = []
+        file_names = []
         errors = []
 
         for file in files:
@@ -92,7 +93,7 @@ def visualizador():
 
                     dicom_urls.append(url_for('static', filename=f'uploads/{filename}')) #guardamos el path del archivo subido
                     dicom_info_list.append(dicom_info)
-                    fileNames.append(filename)
+                    file_names.append(filename)
 
                 except Exception as e:
                     errors.append(f'Error al procesar {file.filename}: {str(e)}')
@@ -101,17 +102,17 @@ def visualizador():
                 errors.append(f'{file.filename} no es un archivo DICOM válido')
 
         if errors:
-            return render_template('Visualizador.html', mensaje='falla3', errors=errors)
+            return render_template(TEMPLATE, mensaje='falla3', errors=errors)
 
         return render_template(
-            'Visualizador.html',
+            TEMPLATE,
             mensaje='listoo',
             dicom_info=dicom_info,
-            archivosID=fileNames
+            archivosID=file_names
         )
 
     # Si es un GET o no se suben archivos, aún renderizamos la plantilla
-    return render_template('Visualizador.html', mensaje='normal', dicom_info=None)
+    return render_template(TEMPLATE, mensaje='normal', dicom_info=None)
 
 # eliminar los archivos subidos de la carpeta uploads al momento que se cierre la pagina
 @app.route('/delete-uploads', methods=['POST'])
