@@ -1,4 +1,5 @@
 const path = require("path");
+const { experiments } = require("webpack");
 const basePath = __dirname;
 const distPath = 'dist';
 

@@ -1,14 +1,13 @@
 export function Regla(isLengthToolActive, dicomElements) {
     document.getElementById('measure-btn').addEventListener('click', function () {
-        dicomElements.forEach((element) => {
             if (isLengthToolActive) {
-                cornerstoneTools.setToolDisabledForElement(element, 'Length');
-                console.log(`Herramienta de medición desactivada en: ${element.id}`);
+                cornerstoneTools.setToolDisabled('Length', { mouseButtonMask: 1 });
+                console.log(`Herramienta de medición desactivada en: ${dicomElements.id}`);
             } else {
-                cornerstoneTools.setToolActiveForElement(element, 'Length', { mouseButtonMask: 1 });
-                console.log(`Herramienta de medición activada en: ${element.id}`);
+                cornerstoneTools.setToolActive(dicomElements, 'Length', { mouseButtonMask: 1 });
+                console.log(`Herramienta de medición activada en: ${dicomElements.id}`);
             }
-        });
         isLengthToolActive = !isLengthToolActive;
     });
 }
+    

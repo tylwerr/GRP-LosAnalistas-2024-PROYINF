@@ -6,6 +6,8 @@ import { Regla } from './Regla.js';
 import { Zoom } from './Zoom.js';
 
 
+
+
 $(document).ready(async function () {
     
 //<------- VINCULACIONES CON HTML ------->
@@ -38,7 +40,10 @@ $(document).ready(async function () {
 //<------- INICIALIZACIÓN DE CORNERSTONE ------->
     await cornerstoneCore.init();
     await dicomImageLoader.init();
-    //await cornerstoneTools.init();
+    await cornerstoneTools.init({
+        mouseEnabled: true,
+        showSVGCursors: true, // Para mostrar cursores SVG en las herramientas
+    });
     
     //const { ToolGroupManager, Enums, CrosshairsTool, synchronizers, } = cornerstoneTools;
     
@@ -60,7 +65,6 @@ $(document).ready(async function () {
     
     // Creacion imagenes IDs
     const imageIds = fileNames.map(fileName=>"wadouri:http://localhost:5000/static/uploads/"+fileName);
-    
     
     const renderingEngineId = 'myRenderingEngine';
     const renderingEngine = new cornerstoneCore.RenderingEngine(renderingEngineId);
@@ -109,27 +113,10 @@ $(document).ready(async function () {
     [viewportId1, viewportId2, viewportId3]
     );
 
-
-    
-
 //<------- END INICIALIZACIÓN DE CORNERSTONE ------->
 
-//<------- CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
-/*
-    const LengthTool = cornerstoneTools.LengthTool;
-    cornerstoneTools.addTool(cornerstoneTools.LengthTool);
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-
-    let isLengthToolActive = false;
-    Regla(isLengthToolActive, [axialViewElement, coronalViewElement, sagittalViewElement]);
-*/
-
-//<------- END CARGAR IMÁGENES Y USO DE CORNERSTONE ------->
-    
-//<------- FUNCIONALIDADES ------->
-    
-    let isZoomToolActive = false;
-
+//<------- SINCRONIZACIÓN ------->
+    /*
     let synchronizer;
     // Opciones de estilo para las herramientas de Cornerstone
     const toolOptions = {
@@ -138,7 +125,6 @@ $(document).ready(async function () {
         lineWidth: 2,         // Grosor de la línea
     };
 
-    /*
     const viewportReferenceLineControllable = [
         viewportId1,
         viewportId2,
@@ -175,7 +161,6 @@ $(document).ready(async function () {
         const index = viewportReferenceLineSlabThicknessControlsOn.indexOf(viewportId);
         return index !== -1;
     }
-    */
 
     //cornerstoneTools.addTool(CrosshairsTool);
     //cornerstoneTools.addTool(ZoomTool);
@@ -186,19 +171,37 @@ $(document).ready(async function () {
     toolGroup.addViewport(viewportId1, renderingEngineId);
     toolGroup.addViewport(viewportId2, renderingEngineId);
     toolGroup.addViewport(viewportId3, renderingEngineId);
+    */
 
+
+
+//<------- END SINCRONIZACIÓN ------->
+
+//<------- FUNCIONALIDADES ------->
+    
     //Botón de Regla
-    //Regla(isLengthToolActive, dicomImageElement);
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    const LengthTool = cornerstoneTools.LengthTool;
+    cornerstoneTools.addTool(LengthTool);
+
+    let isLengthToolActive = false;
+
+    Regla(isLengthToolActive, axialViewElement);
+    Regla(isLengthToolActive, coronalViewElement);
+    Regla(isLengthToolActive, sagittalViewElement);
+
 
     //Botón de Zoom
+    //let isZoomToolActive = false;
     //Zoom(isZoomToolActive, toolGroup);
     
+
+
+
     //Mostrar información
     Informacion();
 
-    
-//<------- END FUNCIONALIDADES ------->
-
-    // Render the image
+        // Render the image
     renderingEngine.renderViewports([viewportId1, viewportId2, viewportId3]);
+//<------- END FUNCIONALIDADES ------->
 });
