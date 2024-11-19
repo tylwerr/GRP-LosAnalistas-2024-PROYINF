@@ -172,9 +172,9 @@ $(document).ready(async function () {
     toolGroup.addViewport(viewportId2, renderingEngineId);
     toolGroup.addViewport(viewportId3, renderingEngineId);
     */
-
-
-
+    cornerstone.enable(axialViewElement);
+    cornerstone.enable(coronalViewElement);
+    cornerstone.enable(sagittalViewElement);
 //<------- END SINCRONIZACIÓN ------->
 
 //<------- FUNCIONALIDADES ------->
@@ -185,6 +185,7 @@ $(document).ready(async function () {
     cornerstoneTools.addTool(LengthTool);
 
     let isLengthToolActive = false;
+
 
     Regla(isLengthToolActive, axialViewElement);
     Regla(isLengthToolActive, coronalViewElement);

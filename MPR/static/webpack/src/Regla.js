@@ -1,11 +1,11 @@
-export function Regla(isLengthToolActive, dicomElements) {
+export function Regla(isLengthToolActive, dicomElement) {
     document.getElementById('measure-btn').addEventListener('click', function () {
             if (isLengthToolActive) {
-                cornerstoneTools.setToolDisabled('Length', { mouseButtonMask: 1 });
-                console.log(`Herramienta de medición desactivada en: ${dicomElements.id}`);
+                cornerstoneTools.setToolDisabledForElement(dicomElement, 'Length', { mouseButtonMask: 1 });
+                console.log(`Herramienta de medición desactivada en: ${dicomElement.id}`);
             } else {
-                cornerstoneTools.setToolActive(dicomElements, 'Length', { mouseButtonMask: 1 });
-                console.log(`Herramienta de medición activada en: ${dicomElements.id}`);
+                cornerstoneTools.setToolActiveForElement(dicomElement, 'Length', { mouseButtonMask: 1 });
+                console.log(`Herramienta de medición activada en: ${dicomElement.id}`);
             }
         isLengthToolActive = !isLengthToolActive;
     });
