@@ -1,6 +1,6 @@
 import * as cornerstoneCore from '@cornerstonejs/core';
 import * as dicomImageLoader from '@cornerstonejs/dicom-image-loader';
-import * as cornerstoneTools from '@cornerstonejs/tools'; // Para tools.js
+//import * as cornerstoneTools from '@cornerstonejs/tools'; // Para tools.js
 import { Informacion } from './Mostrar_informacion.js';
 import { Regla } from './Regla.js';
 import { Zoom } from './Zoom.js';
@@ -38,11 +38,11 @@ $(document).ready(async function () {
 //<------- INICIALIZACIÓN DE CORNERSTONE ------->
     await cornerstoneCore.init();
     await dicomImageLoader.init();
-    await cornerstoneTools.init();
+    //await cornerstoneTools.init();
     
-    const { ToolGroupManager, Enums, CrosshairsTool, synchronizers, } = cornerstoneTools;
+    //const { ToolGroupManager, Enums, CrosshairsTool, synchronizers, } = cornerstoneTools;
     
-    const { createSlabThicknessSynchronizer } = synchronizers;
+    //const { createSlabThicknessSynchronizer } = synchronizers;
     const { ViewportType } = cornerstoneCore.Enums;
 
     const axialViewElement = document.getElementById('axial-view');
@@ -54,7 +54,7 @@ $(document).ready(async function () {
     const viewportId3 = 'CT_CORONAL';
 
     const toolGroupId = 'MY_TOOLGROUP_ID';
-    const toolGroup = cornerstoneTools.ToolGroupManager.createToolGroup(toolGroupId);
+    //const toolGroup = cornerstoneTools.ToolGroupManager.createToolGroup(toolGroupId);
 
     const synchronizerId = 'SLAB_THICKNESS_SYNCHRONIZER_ID';
     
@@ -178,9 +178,9 @@ $(document).ready(async function () {
     */
 
     //cornerstoneTools.addTool(CrosshairsTool);
-    cornerstoneTools.addTool(ZoomTool);
+    //cornerstoneTools.addTool(ZoomTool);
     //toolGroup.addTool(CrosshairsTool.toolName);
-    toolGroup.addTool(ZoomTool.toolName);
+    //toolGroup.addTool(ZoomTool.toolName);
     //addManipulationBindings(toolGroup);
 
     toolGroup.addViewport(viewportId1, renderingEngineId);
@@ -191,7 +191,7 @@ $(document).ready(async function () {
     //Regla(isLengthToolActive, dicomImageElement);
 
     //Botón de Zoom
-    Zoom(isZoomToolActive, toolGroup);
+    //Zoom(isZoomToolActive, toolGroup);
     
     //Mostrar información
     Informacion();

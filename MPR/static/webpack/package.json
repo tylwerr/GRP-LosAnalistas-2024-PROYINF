@@ -32,5 +32,11 @@
     "path-browserify": "^1.0.1",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.5"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "types": "./dist/esm/index.d.ts"
+    }
   }
 }
